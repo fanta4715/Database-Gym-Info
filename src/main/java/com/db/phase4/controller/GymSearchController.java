@@ -34,66 +34,44 @@ public class GymSearchController {
 
     @PostMapping("/gym/search/numOfPeople")
     public String numResultView(@RequestParam String numOfPeople, Model model) {
-        System.out.println("GymSearchController findByNum A");
         List<GymViewDto> gymList = gymSearchService.findByNumOfPeople(numOfPeople);
-        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
         model.addAttribute("gymList", gymList);
-        System.out.println("GymSearchController findByNum C");
         return "gym_search/numOfPeople";
     }
 
     //특정 전문분야의 트레이너의 정보와 해당 트레이너가 속한 gym 이름
     @PostMapping("/gym/search/trainer/specialization")
     public String trainerResultView(@RequestParam String specialization1, @RequestParam(required = false, defaultValue = "") String specialization2, Model model) throws Exception {
-        System.out.println("GymSearchController findByTrainer Specialization A");
-        System.out.println("specialization1: " + specialization1 + " specialization2: " + specialization2);
         String[] specializations = new String[]{specialization1, specialization2};
-        System.out.println("GymSearchController: String[] [0]: " + specializations[0] + " [1]: " + specializations[1]);
         List<TrainerViewDto> trainerList = gymSearchService.findByTrainerSpecialization(specializations);
-        System.out.println("GymSearchController findByTrainer Specialization B, trainerList.size(): " + trainerList.size());
         model.addAttribute("trainerList", trainerList);
-        System.out.println("GymSearchController findByTrainer Specialization C");
         return "gym_search/trainerField";
     }
 
     @GetMapping("/gym/search/trainer/specialization")
     public String trainerFormView(Model model) {
-        System.out.println("GET GET GymSearchController findByTrainer Specialization A");
         return "gym_search/trainerFieldForm";
     }
 
     @GetMapping("/gym/search/review/{status}")
     public String reviewResultView(@PathVariable String status, Model model) {
-        System.out.println("Status: " + status);
-        System.out.println("GymSearchController findByNum A");
         List<GymViewDto> gymList = gymSearchService.findByReviewRate(status);
-        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
         model.addAttribute("gymList", gymList);
-        System.out.println("GymSearchController findByNum C");
-
         return "gym_search/gymRate";
     }
 
     @GetMapping("/gym/search/numOfMachine/{status}")
     public String machineResultView(@PathVariable String status, Model model) {
-        System.out.println("Status: " + status);
-        System.out.println("GymSearchController findByNum A");
         List<GymViewDto> gymList = gymSearchService.findByNumOfMachine(status);
-        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
         model.addAttribute("gymList", gymList);
-        System.out.println("GymSearchController findByNum C");
 
         return "gym_search/numOfMachine";
     }
 
     @GetMapping("/gym/search/gymAndUser/{status}")
     public String gymAndUserOrderResultView(@PathVariable String status, Model model) {
-        System.out.println("Status: " + status);
-        System.out.println("GymSearchController findByNum A");
         List<GymViewDto> gymList = gymSearchService.findByNameOfGymAndUser(status);
-        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
         model.addAttribute("gymList", gymList);
-        System.out.println("GymSearchController findByNum C");
 
         return "gym_search/gymAndUser";
     }
@@ -101,9 +79,7 @@ public class GymSearchController {
     @GetMapping("/gym/search/trainerAndUserDistinct")
     public String trainerAndUserDistinctResultView(Model model) {
         List<PersonViewDto> personList = gymSearchService.findByPersonName();
-        System.out.println("GymSearchController findByNum B, gymList.size(): " + personList.size());
         model.addAttribute("personList", personList);
-        System.out.println("GymSearchController findByNum C");
 
         return "gym_search/person";
     }
