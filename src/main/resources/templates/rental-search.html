@@ -26,6 +26,7 @@
                     <form action="/rental-request" method="get">
                         <input type="hidden" name="itemName" th:value="${rental.itemName}">
                         <input type="hidden" name="gymId" th:value="${param.gymId}">
+                        <input type="hidden" name="userId" th:value="${param.userId}">
                         <input type="submit" value="대여 신청">
                     </form>
                 </td>

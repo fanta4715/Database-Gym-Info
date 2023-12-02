@@ -19,10 +19,6 @@ public class RentalDao {
     String URL;
 
     public List<RentalDto> getWtihGymId(String gymId) {
-        System.out.println(ID);
-        System.out.println(PW);
-        System.out.println(URL);
-
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(URL, ID, PW);

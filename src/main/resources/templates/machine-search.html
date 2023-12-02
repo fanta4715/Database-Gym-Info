@@ -28,10 +28,22 @@
                 <td th:text="${machine.targetMuscle}"></td>
                 <td th:text="${machine.state}"></td>
                 <td>
-                    <form action="/machine-request" method="get">
+                    <form th:if="${machine.state == 'usable'}" action="/machine-request" method="get">
                         <input type="hidden" name="machineId" th:value="${machine.machineId}">
                         <input type="hidden" name="gymId" th:value="${param.gymId}">
-                        <input type="submit" value="기구 신청">
+                        <input type="hidden" name="userId" th:value="${param.userId}">
+                        <input type="submit" value="사용하기">
+                    </form>
+                    <form th:if="${machine.state == 'reservable'}" action="/machine-reserve" method="get">
+                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
+                        <input type="hidden" name="gymId" th:value="${param.gymId}">
+                        <input type="hidden" name="userId" th:value="${param.userId}">
+                        <input type="submit" value="예약하기" style="background-color: #00bfff;">
+                    </form>
+                    <form th:if="${machine.state == 'unusable'}" action="/machine-request" method="get">
+                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
+                        <input type="hidden" name="gymId" th:value="${param.gymId}">
+                        <input type="submit" value="이용불가" disabled="disabled" style="background-color: red; cursor: not-allowed;">
                     </form>
                 </td>
             </tr>

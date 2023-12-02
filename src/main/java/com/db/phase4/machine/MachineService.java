@@ -13,4 +13,12 @@ public class MachineService {
     public List<MachineDto> machineSearchById(String gymId) {
         return machineDao.getWithGymId(gymId);
     }
+
+    public void requestMachine(String gymId, String machineId, String userId) {
+        machineDao.requestMachine(gymId, machineId, userId);
+    }
+
+    public void reserveMachine(String gymId, String machineId, String userId) {
+        machineDao.reserveMachine(gymId, machineId, userId);
+    }
 }

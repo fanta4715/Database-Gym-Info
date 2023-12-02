@@ -9,8 +9,8 @@
 <div class="header">
     <h1>Gym Id : <span th:text="${param.gymId}"></span></h1>
     <div class="controls">
-        <a class="jh-button" th:href="@{/rental-search(gymId=${param.gymId})}">대여 가능한 물품 조회</a>
-        <a class="jh-button" th:href="@{/machine-search(gymId=${param.gymId})}">헬스장 기구 조회</a>
+        <a class="jh-button" th:href="@{/rental-search(gymId=${param.gymId}, userId=${param.userId})}">대여 물품 조회</a>
+        <a class="jh-button" th:href="@{/machine-search(gymId=${param.gymId}, userId=${param.userId})}">운동기구 조회</a>
 
         <form action="/rental-search" method="get">
             <input type="text" name="gymName" placeholder="Gym Name">
