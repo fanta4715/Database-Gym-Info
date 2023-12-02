@@ -1,0 +1,44 @@
+<!--thymeleaf-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Machine Search</title>
+    <link rel="stylesheet" th:href="@{/jh.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Gym Id : <span th:text="${param.gymId}"></span></h1>
+    <div class="rental-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Machine Id</th>
+                <th>Machine Name</th>
+                <th>Machine Type</th>
+                <th>Target Muscle</th>
+                <th>State</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="machine : ${machines}">
+                <td th:text="${machine.machineId}"></td>
+                <td th:text="${machine.name}"></td>
+                <td th:text="${machine.type}"></td>
+                <td th:text="${machine.targetMuscle}"></td>
+                <td th:text="${machine.state}"></td>
+                <td>
+                    <form action="/machine-request" method="get">
+                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
+                        <input type="hidden" name="gymId" th:value="${param.gymId}">
+                        <input type="submit" value="기구 신청">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

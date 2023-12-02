@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RentalController {
     private final RentalService rentalService;
 
-    @GetMapping("/rental")
+    @GetMapping("/my-gym")
     public String index() {
-        return "rental";
+        return "my-gym";
     }
 
     @GetMapping("/rental-search")
@@ -22,25 +22,11 @@ public class RentalController {
         return "rental-search";
     }
 
-
-//            System.out.print("17. 대여물품 대여\n "
+    //            System.out.print("17. 대여물품 대여\n "
 //            "INSERT INTO RENTS(User_id, Gym_id, Item_name) VALUES('" + user_id + "', '" + gym_id + "', '" + item_name + "')"
-
-//            System.out.print("15. 운동기구 예약\n ");
-//            sb.append("UPDATE USERS");
-//		sb.append(" SET RESERVE_MACHINE_ID=" + machineId);
-//		sb.append(" WHERE USER_ID=" + userId);
-
-//        sb.append("UPDATE MACHINE");
-//		sb.append(" SET STATE='non_reservable'");
-//		sb.append(" WHERE MACHINE_ID=" + machineId);
-
-//         System.out.print("16. 운동기구 사용\n ");
-//         sb.append("UPDATE USERS");
-//		sb.append(" SET USING_MACHINE_ID=" + machineId);
-//		sb.append(" WHERE USER_ID=" + userId);
-
-//        sb.append("UPDATE MACHINE");
-//		sb.append(" SET STATE='" + newState + "'");
-//		sb.append(" WHERE MACHINE_ID=" + machineId);
+    @GetMapping("/rental-request")
+    public String rentalSearch(@RequestParam String gymId, @RequestParam String itemName,Model model) {
+//        model.addAttribute("rentals", rentalService.(gymId, itemName));
+        return "rental-request";
+    }
 }
