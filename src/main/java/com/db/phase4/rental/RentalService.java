@@ -14,7 +14,7 @@ public class RentalService {
         return rentalDao.getWtihGymId(gymId);
     }
 
-//    "SELECT * FROM GYM G JOIN RENTAL_ITEM R ON G.Gym_id = R.Gym_id WHERE G.Name = 'gymName'"
+    //    "SELECT * FROM GYM G JOIN RENTAL_ITEM R ON G.Gym_id = R.Gym_id WHERE G.Name = 'gymName'"
     public String rentalSearchByName(String gymName) {
         return "hello";
     }

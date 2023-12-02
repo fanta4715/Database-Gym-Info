@@ -14,12 +14,11 @@ public class RentalDao {
     @Value("${TEST_ID}")
     String ID;
     @Value("${TEST_PW}")
-    String PW ;
+    String PW;
     @Value("${TEST_URL}")
     String URL;
 
-    public List<RentalDto> getWtihGymId(String gymId){
-        //print id, pw, url
+    public List<RentalDto> getWtihGymId(String gymId) {
         System.out.println(ID);
         System.out.println(PW);
         System.out.println(URL);
@@ -36,14 +35,13 @@ public class RentalDao {
             pstmt.setString(1, gymId);
             ResultSet rs = pstmt.executeQuery();
 
-            // 트랜잭션 커밋
+            List<RentalDto> rentalDtos = RentalDto.of(rs);
+
             conn.commit();
 
-            // List<RentalDto> 결과 반환
-            return RentalDto.of(rs);
+            return rentalDtos;
 
         } catch (SQLException e) {
-            // 예외 발생 시 롤백
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -53,7 +51,6 @@ public class RentalDao {
             }
             e.printStackTrace();
         } finally {
-            // 연결 닫기
             if (conn != null) {
                 try {
                     conn.close();

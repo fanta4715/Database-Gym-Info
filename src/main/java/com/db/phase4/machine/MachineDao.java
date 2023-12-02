@@ -15,7 +15,7 @@ public class MachineDao {
     @Value("${TEST_ID}")
     String ID;
     @Value("${TEST_PW}")
-    String PW ;
+    String PW;
     @Value("${TEST_URL}")
     String URL;
 
@@ -32,13 +32,12 @@ public class MachineDao {
             pstmt.setString(1, gymId);
             ResultSet rs = pstmt.executeQuery();
 
-            // 트랜잭션 커밋
+            List<MachineDto> machineDtos = MachineDto.of(rs);
+
             conn.commit();
 
-            // List<RentalDto> 결과 반환
-            return MachineDto.of(rs);
+            return machineDtos;
         } catch (SQLException e) {
-            // 예외 발생 시 롤백
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -48,7 +47,6 @@ public class MachineDao {
             }
             e.printStackTrace();
         } finally {
-            // 연결 닫기
             if (conn != null) {
                 try {
                     conn.close();

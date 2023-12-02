@@ -33,14 +33,14 @@ body {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    display: block; /* 버튼을 블록 요소로 만들어 너비를 조정합니다 */
-    width: 200px; /* 버튼의 너비를 고정합니다 */
-    margin: 10px auto; /* 중앙 정렬 */
+    display: block;
+    width: 200px;
+    margin: 10px auto;
 }
 
 form {
     display: flex;
-    flex-direction: column; /* 세로 방향으로 스택 */
+    flex-direction: column;
     align-items: center;
 }
 
@@ -49,7 +49,7 @@ form input[type="text"] {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     font-size: 16px;
-    width: 200px; /* 입력 필드의 너비를 고정합니다 */
+    width: 200px;
 }
 
 .container {

@@ -13,13 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 public class MachineDto {
-//    MACHINE_ID	NUMBER	No
-//    NAME	VARCHAR2(25 BYTE)	No
-//    TYPE	VARCHAR2(10 BYTE)	Yes
-//    TARGET_MUSCLE	VARCHAR2(10 BYTE)	Yes
-//    STATE	VARCHAR2(15 BYTE)	Yes
-//    GYM_ID	NUMBER	No
-
     private int machineId;
     private String name;
     private String type;
@@ -42,5 +35,4 @@ public class MachineDto {
         }
         return machineDtoList;
     }
-
 }
