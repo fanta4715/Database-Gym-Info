@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.jh-button, form input[type="submit"] {
+    background-color: #1ca086;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    display: block; /* 버튼을 블록 요소로 만들어 너비를 조정합니다 */
+    width: 200px; /* 버튼의 너비를 고정합니다 */
+    margin: 10px auto; /* 중앙 정렬 */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 스택 */
+    align-items: center;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    width: 200px; /* 입력 필드의 너비를 고정합니다 */
+}

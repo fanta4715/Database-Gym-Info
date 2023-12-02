@@ -1,0 +1,21 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Machine</title>
+    <link rel="stylesheet" th:href="@{/jh.css}"/>
+</head>
+<body>
+<div class="header">
+    <h1>RENTAL</h1>
+    <div class="controls">
+        <a class="jh-button" th:href="@{/rental}">대여</a>
+        <a class="jh-button" th:href="@{/return}">반납</a>
+        <a class="jh-button" th:href="@{/rental/search}">조회</a>
+    </div>
+</div>
+<form method="get" th:action="@{/rental/search}">
+    <input type="text" name="gymId" placeholder="gymId를 입력하세요"/>
+    <input type="submit" value="조회"/>
+</form>
+</body>
+</html>
