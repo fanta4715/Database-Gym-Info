@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>체육관 조회 페이지</title>
+  <style>
+    body {
+      background-color: #ecf0f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #gym-search-container {
+      max-width: 800px;
+      width: 100%;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #3498db;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #ffffff;
+      padding: 10px 15px;
+      width: 200px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .age-inputs {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="gym-search-container">
+  <h1>체육관 조회</h1>
+
+  <label for="sortBy">평점순 정렬:</label>
+  <select id="sortBy">
+    <option value="ascending">오름차순</option>
+    <option value="descending">내림차순</option>
+  </select>
+
+  <label for="trainerField">트레이너 전문 분야:</label>
+  <select id="trainerField">
+    <option value="any">상관없음</option>
+    <option value="diet">Diet</option>
+    <option value="conditioning">Conditioning</option>
+    <option value="bodyBuilding">Body Building</option>
+    <option value="powerLifting">Power Lifting</option>
+    <option value="bulkUp">Bulk Up</option>
+  </select>
+
+  <label for="location">지역명:</label>
+  <input type="text" id="location" placeholder="지역을 입력하세요(미입력도 가능)">
+
+  <label for="gender">특정 성별 수 기준:</label>
+  <select id="gender">
+    <option value="male">남성</option>
+    <option value="female">여성</option>
+    <option value="any">상관없음</option>
+  </select>
+
+  <label for="ageGroup">회원들의 나이대:</label>
+  <div class="age-inputs">
+    <input type="number" id="minAge" placeholder="최소 나이">
+    <input type="number" id="maxAge" placeholder="최대 나이">
+  </div>
+
+  <button onclick="searchGyms()">검색</button>
+</div>
+
+<script>
+  function searchGyms() {
+    // TODO: 선택된 기준에 따라 체육관을 조회하는 로직을 추가하세요.
+    alert("체육관을 조회합니다.");
+  }
+</script>
+
+</body>
+
+</html>
