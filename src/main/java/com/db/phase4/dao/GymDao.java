@@ -47,7 +47,7 @@ public class GymDao {
                 String gymName = rs.getString(1);
                 String gymLocation = rs.getString(2);
                 String contact = rs.getString(3);
-                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0, 0);
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0, 0, 0);
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: default" +
@@ -161,13 +161,64 @@ public class GymDao {
                 String gymName = rs.getString(3);
                 String gymLocation= rs.getString(4);
 
-                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate);
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate, 0);
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymAvgRate: " + gymAvgRate +
                         ", gymId: " +gymId +
                         ", gymName: "+ gymName +
                         ", gymLocation: " + gymLocation
+                );
+            }
+            System.out.println("GymDao, finByNumOfPeople: C");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return gymList;
+    }
+
+    public List<GymViewDto> findByNumOfMachine(String status) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<GymViewDto> gymList = new ArrayList<>();
+
+        try{
+            System.out.println("status: " + status);
+
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("SELECT G.Gym_id, g.name, COUNT(*) as Total_Machine ");
+            sb.append("FROM MACHINE M JOIN GYM G ON M.Gym_id = G.Gym_id ");
+            sb.append("JOIN REVIEW R ON G.GYM_ID = R.GYM_ID ");
+            sb.append("GROUP BY G.Gym_id, G.name ");
+            if(status.equals("high")){//머신 개수 많은 GYM 순
+                sb.append("ORDER BY Total_Machine DESC ");
+            }else if(status.equals("low")){//머신 개수 적은 GYM 순
+                sb.append("ORDER BY Total_Machine ASC ");
+            }
+            sb.append("FETCH FIRST 10 ROWS ONLY ");
+
+            System.out.println("GymDao, finByNumOfPeople: A");
+            rs = stmt.executeQuery(sb.toString());
+            System.out.println("GymDao, finByNumOfPeople: B");
+
+
+            while(rs.next()){
+                //G.Gym_id, g.name, COUNT(*) as Total_Machine
+                int gymId = rs.getInt(1);
+                String gymName = rs.getString(2);
+                int numOfMachine = rs.getInt(3);
+
+                GymViewDto gymViewDto = new GymViewDto(gymId, gymName, "", "", 0, 0, numOfMachine);
+                gymList.add(gymViewDto);
+                System.out.println("In GymVDao, gymViewDto instance: " +
+                        ", gymId: " + gymId +
+                        ", gymName: "+ gymName +
+                        ", numOfMachine: " + numOfMachine
                 );
             }
             System.out.println("GymDao, finByNumOfPeople: C");

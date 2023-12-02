@@ -59,7 +59,6 @@ public class GymSearchController {
 
     @GetMapping("/gym/search/review/{status}")
     public String reviewResultView(@PathVariable String status, Model model) {
-        System.out.println("GET GET GymSearchController findByTrainer Specialization A");
         System.out.println("Status: " + status);
         System.out.println("GymSearchController findByNum A");
         List<GymViewDto> gymList = gymSearchService.findByReviewRate(status);
@@ -70,5 +69,16 @@ public class GymSearchController {
         return "gym_search/gymRate";
     }
 
+    @GetMapping("/gym/search/numOfMachine/{status}")
+    public String machineResultView(@PathVariable String status, Model model) {
+        System.out.println("Status: " + status);
+        System.out.println("GymSearchController findByNum A");
+        List<GymViewDto> gymList = gymSearchService.findByNumOfMachine(status);
+        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
+        model.addAttribute("gymList", gymList);
+        System.out.println("GymSearchController findByNum C");
+
+        return "gym_search/numOfMachine";
+    }
 
 }

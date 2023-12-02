@@ -27,4 +27,8 @@ public class GymSearchService {
     public List<GymViewDto> findByReviewRate(String status) {
         return gymDao.findByReviewRate(status);
     }
+
+    public List<GymViewDto> findByNumOfMachine(String status) {
+        return  gymDao.findByNumOfMachine(status);
+    }
 }
