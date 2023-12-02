@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class UserDao {
     String ID = "GYM";
     String PW = "COMP322";
-    String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+    String URL = "jdbc:oracle:thin:@database-m2-instance.cozp9ytwumgi.ap-northeast-2.rds.amazonaws.com:1521:orcl";
 
     Connection conn = DriverManager.getConnection(URL, ID, PW);
     Statement stmt = conn.createStatement();
