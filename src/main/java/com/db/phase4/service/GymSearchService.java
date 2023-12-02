@@ -3,7 +3,6 @@ package com.db.phase4.service;
 import com.db.phase4.dao.GymDao;
 import com.db.phase4.dto.gym.GymViewDto;
 import com.db.phase4.dto.gym.TrainerViewDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,5 +22,9 @@ public class GymSearchService {
 
     public List<TrainerViewDto> findByTrainerSpecialization(String[] specializations) {
         return gymDao.findByTrainerSpecialization(specializations);
+    }
+
+    public List<GymViewDto> findByReviewRate(String status) {
+        return gymDao.findByReviewRate(status);
     }
 }

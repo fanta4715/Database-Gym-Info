@@ -47,7 +47,7 @@ public class GymDao {
                 String gymName = rs.getString(1);
                 String gymLocation = rs.getString(2);
                 String contact = rs.getString(3);
-                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0);
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0, 0);
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: default" +
@@ -123,5 +123,57 @@ public class GymDao {
             throw new RuntimeException(e);
         }
         return trainerList;
+    }
+
+    public List<GymViewDto> findByReviewRate(String status) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<GymViewDto> gymList = new ArrayList<>();
+
+        try{
+            System.out.println("status: " + status);
+
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("SELECT ROUND(AVG(R.Rating), 2) AS AVG_RATE, G.GYM_ID, G.NAME, G.LOCATION ");
+            sb.append("FROM GYM G ");
+            sb.append("JOIN REVIEW R ON G.GYM_ID = R.GYM_ID ");
+            sb.append("GROUP BY G.GYM_ID, G.NAME, G.LOCATION ");
+            if(status.equals("high")){//평균 평점 높은 순
+                sb.append("ORDER BY AVG_RATE DESC ");
+            }else if(status.equals("low")){//평균 평점 낮은 순
+                sb.append("ORDER BY AVG_RATE ASC ");
+            }
+            sb.append("FETCH FIRST 10 ROWS ONLY ");
+
+            System.out.println("GymDao, finByNumOfPeople: A");
+            rs = stmt.executeQuery(sb.toString());
+            System.out.println("GymDao, finByNumOfPeople: B");
+
+
+            while(rs.next()){
+                float gymAvgRate = rs.getFloat(1);
+                String gymId = rs.getString(2);
+                String gymName = rs.getString(3);
+                String gymLocation= rs.getString(4);
+
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate);
+                gymList.add(gymViewDto);
+                System.out.println("In GymVDao, gymViewDto instance: " +
+                        ", gymAvgRate: " + gymAvgRate +
+                        ", gymId: " +gymId +
+                        ", gymName: "+ gymName +
+                        ", gymLocation: " + gymLocation
+                );
+            }
+            System.out.println("GymDao, finByNumOfPeople: C");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return gymList;
     }
 }

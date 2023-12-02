@@ -14,4 +14,5 @@ public class GymViewDto {
     private String location;
     private String contact;
     private int capacity;
+    private float avgRate;
 }
