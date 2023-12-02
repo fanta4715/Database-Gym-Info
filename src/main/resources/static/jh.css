@@ -51,3 +51,46 @@ form input[type="text"] {
     font-size: 16px;
     width: 200px; /* 입력 필드의 너비를 고정합니다 */
 }
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.rental-list {
+    margin-top: 50px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    background-color: #f0f0f0;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}

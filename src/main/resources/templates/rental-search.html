@@ -5,17 +5,34 @@
     <link rel="stylesheet" th:href="@{/jh.css}"/>
 </head>
 <body>
-<div class="header">
-    <h1>RENTAL</h1>
-    <div class="controls">
-        <a class="jh-button" th:href="@{/rental}">대여</a>
-        <a class="jh-button" th:href="@{/return}">반납</a>
-        <a class="jh-button" th:href="@{/rental/search}">조회</a>
+<div class="container">
+    <h1>Gym Id : <span th:text="${param.gymId}"></span></h1>
+    <div class="rental-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Rental Fee</th>
+                <th>Max Quantity</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rental : ${rentals}">
+                <td th:text="${rental.itemName}"></td>
+                <td th:text="${rental.rentalFee}"></td>
+                <td th:text="${rental.maxQuantity}"></td>
+                <td>
+                    <form action="/rental-request" method="get">
+                        <input type="hidden" name="itemName" th:value="${rental.itemName}">
+                        <input type="hidden" name="gymId" th:value="${param.gymId}">
+                        <input type="submit" value="대여 신청">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-<form method="get" th:action="@{/rental/search}">
-    <input type="text" name="gymId" placeholder="gymId를 입력하세요"/>
-    <input type="submit" value="조회"/>
-</form>
 </body>
 </html>
