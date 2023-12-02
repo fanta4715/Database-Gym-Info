@@ -2,6 +2,7 @@ package com.db.phase4.service;
 
 import com.db.phase4.dao.GymDao;
 import com.db.phase4.dto.gym.GymViewDto;
+import com.db.phase4.dto.gym.PersonViewDto;
 import com.db.phase4.dto.gym.TrainerViewDto;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,13 @@ public class GymSearchService {
 
     public List<GymViewDto> findByNumOfMachine(String status) {
         return  gymDao.findByNumOfMachine(status);
+    }
+
+    public List<GymViewDto> findByNameOfGymAndUser(String status) {
+        return gymDao.findByNameOfGymAndUser(status);
+    }
+
+    public List<PersonViewDto> findByPersonName() {
+        return gymDao.findByPersonName();
     }
 }

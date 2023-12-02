@@ -1,6 +1,7 @@
 package com.db.phase4.dao;
 
 import com.db.phase4.dto.gym.GymViewDto;
+import com.db.phase4.dto.gym.PersonViewDto;
 import com.db.phase4.dto.gym.TrainerViewDto;
 import com.db.phase4.util.ConnectionMaker;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class GymDao {
                 String gymName = rs.getString(1);
                 String gymLocation = rs.getString(2);
                 String contact = rs.getString(3);
-                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0, 0, 0);
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, contact, 0, 0, 0, "");
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: default" +
@@ -161,7 +162,7 @@ public class GymDao {
                 String gymName = rs.getString(3);
                 String gymLocation= rs.getString(4);
 
-                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate, 0);
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate, 0, "");
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymAvgRate: " + gymAvgRate +
@@ -213,7 +214,7 @@ public class GymDao {
                 String gymName = rs.getString(2);
                 int numOfMachine = rs.getInt(3);
 
-                GymViewDto gymViewDto = new GymViewDto(gymId, gymName, "", "", 0, 0, numOfMachine);
+                GymViewDto gymViewDto = new GymViewDto(gymId, gymName, "", "", 0, 0, numOfMachine, "");
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: " + gymId +
@@ -226,5 +227,89 @@ public class GymDao {
             throw new RuntimeException(e);
         }
         return gymList;
+    }
+
+    public List<GymViewDto> findByNameOfGymAndUser(String status) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<GymViewDto> gymList = new ArrayList<>();
+
+        try{
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("SELECT G.Name as Gym_Name, U.Name as User_Name ");
+            sb.append("FROM USERS U, GYM G, ENROLLS E ");
+            sb.append("WHERE U.User_id = E.User_id AND E.Gym_id = G.Gym_id ");
+            if(status.equals("high")){
+                sb.append("ORDER BY G.Name DESC, U.Name DESC ");
+            }
+            else if(status.equals("low")){
+                sb.append("ORDER BY G.Name ASC, U.Name ASC ");
+            }
+
+            System.out.println("GymDao, finByNumOfPeople: A");
+            rs = stmt.executeQuery(sb.toString());
+            System.out.println("GymDao, finByNumOfPeople: B");
+
+
+            while(rs.next()){
+                //G.Gym_id, g.name, COUNT(*) as Total_Machine
+                String gymName = rs.getString(1);
+                String userName = rs.getString(2);
+
+                GymViewDto gymViewDto = new GymViewDto(0, gymName, "", "", 0, 0, 0, userName);
+                gymList.add(gymViewDto);
+                System.out.println("In GymVDao, gymViewDto instance: " +
+                        ", gymName: " + gymName +
+                        ", userName: "+ userName
+                );
+            }
+            System.out.println("GymDao, finByNumOfPeople: C");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return gymList;
+    }
+
+    public List<PersonViewDto> findByPersonName() {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<PersonViewDto> personList = new ArrayList<>();
+
+        try{
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("SELECT Name FROM USERS ");
+            sb.append("UNION ");
+            sb.append("SELECT Name FROM TRAINER ");
+
+            System.out.println("GymDao, finByNumOfPeople: A");
+            rs = stmt.executeQuery(sb.toString());
+            System.out.println("GymDao, finByNumOfPeople: B");
+
+
+            while(rs.next()){
+                //G.Gym_id, g.name, COUNT(*) as Total_Machine
+                String personName = rs.getString(1);
+
+                PersonViewDto personViewDto = new PersonViewDto(personName);
+                personList.add(personViewDto);
+                System.out.println("In GymDao, personViewDto instance: " +
+                        ", personName: " + personName
+                );
+            }
+            System.out.println("GymDao, finByNumOfPeople: C");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return personList;
     }
 }

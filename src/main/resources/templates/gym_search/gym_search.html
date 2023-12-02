@@ -41,7 +41,8 @@
       margin-bottom: 10px;
     }
 
-    select, input {
+    select,
+    input {
       width: 100%;
       padding: 8px;
       margin-bottom: 15px;
@@ -57,10 +58,27 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
+    a {
+      width: 400px;
+    }
     .age-inputs {
       display: flex;
       gap: 10px;
+    }
+
+    /* Style for blue buttons without underlines */
+    #gym-search-container a {
+      display: inline-block;
+      background-color: #3498db;
+      color: #ffffff;
+      padding: 10px 15px;
+      margin: 5px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    #gym-search-container a:hover {
+      background-color: #2c81ba;
     }
   </style>
 </head>
@@ -68,41 +86,16 @@
 <body>
 
 <div id="gym-search-container">
-  <h1>체육관 조회</h1>
-
-  <label for="sortBy">평점순 정렬:</label>
-  <select id="sortBy">
-    <option value="ascending">오름차순</option>
-    <option value="descending">내림차순</option>
-  </select>
-
-  <label for="trainerField">트레이너 전문 분야:</label>
-  <select id="trainerField">
-    <option value="any">상관없음</option>
-    <option value="diet">Diet</option>
-    <option value="conditioning">Conditioning</option>
-    <option value="bodyBuilding">Body Building</option>
-    <option value="powerLifting">Power Lifting</option>
-    <option value="bulkUp">Bulk Up</option>
-  </select>
-
-  <label for="location">지역명:</label>
-  <input type="text" id="location" placeholder="지역을 입력하세요(미입력도 가능)">
-
-  <label for="gender">특정 성별 수 기준:</label>
-  <select id="gender">
-    <option value="male">남성</option>
-    <option value="female">여성</option>
-    <option value="any">상관없음</option>
-  </select>
-
-  <label for="ageGroup">회원들의 나이대:</label>
-  <div class="age-inputs">
-    <input type="number" id="minAge" placeholder="최소 나이">
-    <input type="number" id="maxAge" placeholder="최대 나이">
-  </div>
-
-  <button onclick="searchGyms()">검색</button>
+  <h2>GYM SEARCH PAGE</h2>
+  <a href="http://localhost:8080/gym/search/numOfPeople">등록 인원 일정 수 이하인 체육관 조회</a>
+  <a href="http://localhost:8080/gym/search/trainer/specialization">특정 전문분야의 트레이너 정보 및 근무하는 체육관</a>
+  <a href="http://localhost:8080/gym/search/review/high">체육관 리뷰 평점 높은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/review/low">체육관 리뷰 평점 낮은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/numOfMachine/high">체육관 운동기구 개수 높은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/numOfMachine/low">체육관 운동기구 개수 낮은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/gymAndUser/high">체육관 및 회원 이름 순으로 내림차순 정렬</a>
+  <a href="http://localhost:8080/gym/search/gymAndUser/low">체육관 및 회원 이름 순으로 오름차순 정렬</a>
+  <a href="http://localhost:8080/gym/search/trainerAndUserDistinct">모든 체육관의 트레이너 및 회원의 이름 조회, 중복 제거</a>
 </div>
 
 <script>

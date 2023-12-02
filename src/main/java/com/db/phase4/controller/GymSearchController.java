@@ -1,6 +1,7 @@
 package com.db.phase4.controller;
 
 import com.db.phase4.dto.gym.GymViewDto;
+import com.db.phase4.dto.gym.PersonViewDto;
 import com.db.phase4.dto.gym.TrainerViewDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.service.GymSearchService;
@@ -21,9 +22,13 @@ import java.util.Map;
 public class GymSearchController {
     private final GymSearchService gymSearchService;
 
+    @GetMapping("/gym/search/home")
+    public String gymSearchPageMainHome(Model model){
+        return "gym_search/gym_search";
+    }
     //회원의 수가 특정 인원 수 미만인 gym 정보 조회
     @GetMapping("/gym/search/numOfPeople")
-    public String numdResultView(Model model) {
+    public String numOfPeopleResultView(Model model) {
         return "gym_search/numOfPeopleForm";
     }
 
@@ -79,6 +84,28 @@ public class GymSearchController {
         System.out.println("GymSearchController findByNum C");
 
         return "gym_search/numOfMachine";
+    }
+
+    @GetMapping("/gym/search/gymAndUser/{status}")
+    public String gymAndUserOrderResultView(@PathVariable String status, Model model) {
+        System.out.println("Status: " + status);
+        System.out.println("GymSearchController findByNum A");
+        List<GymViewDto> gymList = gymSearchService.findByNameOfGymAndUser(status);
+        System.out.println("GymSearchController findByNum B, gymList.size(): " + gymList.size());
+        model.addAttribute("gymList", gymList);
+        System.out.println("GymSearchController findByNum C");
+
+        return "gym_search/gymAndUser";
+    }
+
+    @GetMapping("/gym/search/trainerAndUserDistinct")
+    public String trainerAndUserDistinctResultView(Model model) {
+        List<PersonViewDto> personList = gymSearchService.findByPersonName();
+        System.out.println("GymSearchController findByNum B, gymList.size(): " + personList.size());
+        model.addAttribute("personList", personList);
+        System.out.println("GymSearchController findByNum C");
+
+        return "gym_search/person";
     }
 
 }
