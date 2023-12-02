@@ -2,19 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer of Gyms Search Results</title>
+    <style>
+        <!-- 여기에 스타일 설정 -->
+    </style>
 </head>
 <body>
-<!-- trainerField.html -->
-<label for="trainerField">트레이너 전문 분야:</label>
-<select id="trainerField">
-    <option value="any">상관없음</option>
-    <option value="diet">다이어트</option>
-    <option value="conditioning">컨디셔닝</option>
-    <option value="bodyBuilding">보디빌딩</option>
-    <option value="powerLifting">파워리프팅</option>
-    <option value="bulkUp">벌크업</option>
-</select>
+
+<div id="gym-search-container">
+    <h1>Gym Search Results</h1>
+
+    <!-- gymList를 반복하여 각 체육관 정보를 표시 -->
+    <ul>
+        <!-- Thymeleaf의 each 디렉티브를 사용하여 반복 -->
+        <li th:each="trainer : ${trainerList}">
+            <span th:text="${trainer.gymName}"></span>
+            <span th:text="${trainer.trainerName}"></span>
+            <span th:text="${trainer.specialization}"></span>
+            <span th:text="${trainer.contact}"></span>
+        </li>
+    </ul>
+
+    asdfasdfasdfasdfasdfasf
+
+
+</div>
 
 </body>
 </html>

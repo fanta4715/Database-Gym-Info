@@ -1,6 +1,7 @@
 package com.db.phase4.dao;
 
 import com.db.phase4.dto.gym.GymViewDto;
+import com.db.phase4.dto.gym.TrainerViewDto;
 import com.db.phase4.util.ConnectionMaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -61,5 +62,66 @@ public class GymDao {
             throw new RuntimeException(e);
         }
         return gymList;
+    }
+
+    public List<TrainerViewDto> findByTrainerSpecialization(String[] specializations) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<TrainerViewDto> trainerList = new ArrayList<>();
+
+        try{
+            System.out.println("GymDao, [0]: " + specializations[0] + " [1]: " + specializations[1]);
+            System.out.println("numOfPeople type: " + specializations.getClass());
+
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+            System.out.println();
+            StringBuffer sb = new StringBuffer();
+            if(specializations[1].trim().equals("")){
+                System.out.println("array length: 1");
+                sb.append("SELECT G.Name as GYM_NAME, G.Gym_id as GYM_ID, T.Trainer_id, T.Name, T.Contact, T.Specialization ");
+                sb.append("FROM TRAINER T JOIN GYM G ON T.Gym_id = G.Gym_id ");
+                sb.append("WHERE T.Specialization = \'" + specializations[0] + "' ");
+
+            }else{
+                System.out.println("[1]: " + specializations[1]);
+                System.out.println("array length: 2");
+                sb.append("SELECT G.Name as GYM_NAME, G.Gym_id as GYM_ID, T.Trainer_id, T.Name, T.Contact, T.Specialization ");
+                sb.append("FROM TRAINER T JOIN GYM G ON T.Gym_id = G.Gym_id ");
+                sb.append("WHERE T.Specialization in (\'" + specializations[0] + "', \'" + specializations[1] + "') ");
+            }
+
+            System.out.println(sb.toString());
+            System.out.println("GymDao, finByTrainerSpecialization: A");
+            rs = stmt.executeQuery(sb.toString());
+            System.out.println("GymDao, finByTrainerSpecialization: B");
+            if(rs == null) System.out.println("rs is null");
+            else {System.out.println("rs is not null");
+                System.out.println(rs.next());}
+
+            while(rs.next()){
+                System.out.println("in rs.next() while");
+                String gymName = rs.getString(1);
+                int gymId = rs.getInt(2);
+                int trainerId = rs. getInt(3);
+                String trainerName = rs.getString(4);
+                String trainerContact = rs.getString(5);
+                String specialization = rs.getString(6);
+                TrainerViewDto trainerViewDto = new TrainerViewDto(gymName, gymId, trainerId, trainerName, trainerContact, specialization);
+                trainerList.add(trainerViewDto);
+                System.out.println("In GymDao, trainerViewDao instance: " +
+                        ", gymName: " + gymId +
+                        ", gymName: "+ gymName +
+                        ", trainerId: " + trainerId +
+                        ", trainerName: " + trainerName +
+                        ", specialization: " + specialization + " "
+                );
+            }
+            System.out.println("GymDao, findByTrainerSpecialization: C");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return trainerList;
     }
 }
