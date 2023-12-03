@@ -71,11 +71,11 @@
   <div class="search-container">
 <!--    <input type="text" id="searchInput" placeholder="Search Reviews">-->
     <button onclick="searchReviews()">Setting Filter</button>
-    <a th:href="@{/{id}/review-save(id=${gymId})}">
-      <button type="button">리뷰 저장</button>
-    </a>
   </div>
-  <button class="add-review-button" id="addReviewButton" onclick="addReview()">Add Review</button>
+<!--  <button class="add-review-button" id="addReviewButton" onclick="addReview()">Add Review</button>-->
+  <a th:href="@{/user/{userId}/gym/{gymId}/review-save(userId=${userId}, gymId=${gymId})}">
+    <button class="add-review-button" type="button">Create Review</button>
+  </a>
 </div>
 <body>
 <div class="review-list">
