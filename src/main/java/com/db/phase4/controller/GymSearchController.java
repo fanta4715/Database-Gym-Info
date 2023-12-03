@@ -23,9 +23,10 @@ public class GymSearchController {
     private final GymSearchService gymSearchService;
 
     @GetMapping("/gym/search/home")
-    public String gymSearchPageMainHome(Model model){
+    public String gymSearchPageMainHome(Model model) {
         return "gym_search/gym_search";
     }
+
     //회원의 수가 특정 인원 수 미만인 gym 정보 조회
     @GetMapping("/gym/search/numOfPeople")
     public String numOfPeopleResultView(Model model) {

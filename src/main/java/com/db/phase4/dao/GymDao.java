@@ -20,15 +20,15 @@ public class GymDao {
     private final ConnectionMaker connectionMaker;
 
     //인원 수 기준으로 gym 정보를 찾아서 보여주는 것
-    public List<GymViewDto> findByNumOfPeople(String numOfPeople){
+    public List<GymViewDto> findByNumOfPeople(String numOfPeople) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
         List<GymViewDto> gymList = new ArrayList<>();
 
-        try{
+        try {
             System.out.println("numOfPeople: " + numOfPeople);
-            System.out.println("numOfPeople type: "+ numOfPeople.getClass());
+            System.out.println("numOfPeople type: " + numOfPeople.getClass());
 
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();
@@ -37,14 +37,14 @@ public class GymDao {
 
             sb.append("SELECT Name, Location, Contact ");
             sb.append("FROM GYM ");
-            sb.append("WHERE Capacity < "  + numOfPeople + " ");
+            sb.append("WHERE Capacity < " + numOfPeople + " ");
 
             System.out.println("GymDao, finByNumOfPeople: A");
             rs = stmt.executeQuery(sb.toString());
             System.out.println("GymDao, finByNumOfPeople: B");
 
 
-            while(rs.next()){
+            while (rs.next()) {
                 String gymName = rs.getString(1);
                 String gymLocation = rs.getString(2);
                 String contact = rs.getString(3);
@@ -52,11 +52,11 @@ public class GymDao {
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: default" +
-                        ", gymName: "+ gymName +
+                        ", gymName: " + gymName +
                         ", gymLocation: " + gymLocation +
                         ", contact: " + contact +
                         ", capacity: default"
-                        );
+                );
             }
             System.out.println("GymDao, finByNumOfPeople: C");
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ public class GymDao {
         ResultSet rs = null;
         List<TrainerViewDto> trainerList = new ArrayList<>();
 
-        try{
+        try {
             System.out.println("GymDao, [0]: " + specializations[0] + " [1]: " + specializations[1]);
             System.out.println("numOfPeople type: " + specializations.getClass());
 
@@ -79,13 +79,13 @@ public class GymDao {
             stmt = conn.createStatement();
             System.out.println();
             StringBuffer sb = new StringBuffer();
-            if(specializations[1].trim().equals("")){
+            if (specializations[1].trim().equals("")) {
                 System.out.println("array length: 1");
                 sb.append("SELECT G.Name as GYM_NAME, G.Gym_id as GYM_ID, T.Trainer_id, T.Name, T.Contact, T.Specialization ");
                 sb.append("FROM TRAINER T JOIN GYM G ON T.Gym_id = G.Gym_id ");
                 sb.append("WHERE T.Specialization = \'" + specializations[0] + "' ");
 
-            }else{
+            } else {
                 System.out.println("[1]: " + specializations[1]);
                 System.out.println("array length: 2");
                 sb.append("SELECT G.Name as GYM_NAME, G.Gym_id as GYM_ID, T.Trainer_id, T.Name, T.Contact, T.Specialization ");
@@ -97,15 +97,17 @@ public class GymDao {
             System.out.println("GymDao, finByTrainerSpecialization: A");
             rs = stmt.executeQuery(sb.toString());
             System.out.println("GymDao, finByTrainerSpecialization: B");
-            if(rs == null) System.out.println("rs is null");
-            else {System.out.println("rs is not null");
-                System.out.println(rs.next());}
+            if (rs == null) System.out.println("rs is null");
+            else {
+                System.out.println("rs is not null");
+                System.out.println(rs.next());
+            }
 
-            while(rs.next()){
+            while (rs.next()) {
                 System.out.println("in rs.next() while");
                 String gymName = rs.getString(1);
                 int gymId = rs.getInt(2);
-                int trainerId = rs. getInt(3);
+                int trainerId = rs.getInt(3);
                 String trainerName = rs.getString(4);
                 String trainerContact = rs.getString(5);
                 String specialization = rs.getString(6);
@@ -113,7 +115,7 @@ public class GymDao {
                 trainerList.add(trainerViewDto);
                 System.out.println("In GymDao, trainerViewDao instance: " +
                         ", gymName: " + gymId +
-                        ", gymName: "+ gymName +
+                        ", gymName: " + gymName +
                         ", trainerId: " + trainerId +
                         ", trainerName: " + trainerName +
                         ", specialization: " + specialization + " "
@@ -132,7 +134,7 @@ public class GymDao {
         ResultSet rs = null;
         List<GymViewDto> gymList = new ArrayList<>();
 
-        try{
+        try {
             System.out.println("status: " + status);
 
             conn = connectionMaker.createConnection();
@@ -144,9 +146,9 @@ public class GymDao {
             sb.append("FROM GYM G ");
             sb.append("JOIN REVIEW R ON G.GYM_ID = R.GYM_ID ");
             sb.append("GROUP BY G.GYM_ID, G.NAME, G.LOCATION ");
-            if(status.equals("high")){//평균 평점 높은 순
+            if (status.equals("high")) {//평균 평점 높은 순
                 sb.append("ORDER BY AVG_RATE DESC ");
-            }else if(status.equals("low")){//평균 평점 낮은 순
+            } else if (status.equals("low")) {//평균 평점 낮은 순
                 sb.append("ORDER BY AVG_RATE ASC ");
             }
             sb.append("FETCH FIRST 10 ROWS ONLY ");
@@ -156,18 +158,18 @@ public class GymDao {
             System.out.println("GymDao, finByNumOfPeople: B");
 
 
-            while(rs.next()){
+            while (rs.next()) {
                 float gymAvgRate = rs.getFloat(1);
                 String gymId = rs.getString(2);
                 String gymName = rs.getString(3);
-                String gymLocation= rs.getString(4);
+                String gymLocation = rs.getString(4);
 
                 GymViewDto gymViewDto = new GymViewDto(0, gymName, gymLocation, "", 0, gymAvgRate, 0, "");
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymAvgRate: " + gymAvgRate +
-                        ", gymId: " +gymId +
-                        ", gymName: "+ gymName +
+                        ", gymId: " + gymId +
+                        ", gymName: " + gymName +
                         ", gymLocation: " + gymLocation
                 );
             }
@@ -184,7 +186,7 @@ public class GymDao {
         ResultSet rs = null;
         List<GymViewDto> gymList = new ArrayList<>();
 
-        try{
+        try {
             System.out.println("status: " + status);
 
             conn = connectionMaker.createConnection();
@@ -196,9 +198,9 @@ public class GymDao {
             sb.append("FROM MACHINE M JOIN GYM G ON M.Gym_id = G.Gym_id ");
             sb.append("JOIN REVIEW R ON G.GYM_ID = R.GYM_ID ");
             sb.append("GROUP BY G.Gym_id, G.name ");
-            if(status.equals("high")){//머신 개수 많은 GYM 순
+            if (status.equals("high")) {//머신 개수 많은 GYM 순
                 sb.append("ORDER BY Total_Machine DESC ");
-            }else if(status.equals("low")){//머신 개수 적은 GYM 순
+            } else if (status.equals("low")) {//머신 개수 적은 GYM 순
                 sb.append("ORDER BY Total_Machine ASC ");
             }
             sb.append("FETCH FIRST 10 ROWS ONLY ");
@@ -208,7 +210,7 @@ public class GymDao {
             System.out.println("GymDao, finByNumOfPeople: B");
 
 
-            while(rs.next()){
+            while (rs.next()) {
                 //G.Gym_id, g.name, COUNT(*) as Total_Machine
                 int gymId = rs.getInt(1);
                 String gymName = rs.getString(2);
@@ -218,7 +220,7 @@ public class GymDao {
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymId: " + gymId +
-                        ", gymName: "+ gymName +
+                        ", gymName: " + gymName +
                         ", numOfMachine: " + numOfMachine
                 );
             }
@@ -235,7 +237,7 @@ public class GymDao {
         ResultSet rs = null;
         List<GymViewDto> gymList = new ArrayList<>();
 
-        try{
+        try {
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();
 
@@ -244,10 +246,9 @@ public class GymDao {
             sb.append("SELECT G.Name as Gym_Name, U.Name as User_Name ");
             sb.append("FROM USERS U, GYM G, ENROLLS E ");
             sb.append("WHERE U.User_id = E.User_id AND E.Gym_id = G.Gym_id ");
-            if(status.equals("high")){
+            if (status.equals("high")) {
                 sb.append("ORDER BY G.Name DESC, U.Name DESC ");
-            }
-            else if(status.equals("low")){
+            } else if (status.equals("low")) {
                 sb.append("ORDER BY G.Name ASC, U.Name ASC ");
             }
 
@@ -256,7 +257,7 @@ public class GymDao {
             System.out.println("GymDao, finByNumOfPeople: B");
 
 
-            while(rs.next()){
+            while (rs.next()) {
                 //G.Gym_id, g.name, COUNT(*) as Total_Machine
                 String gymName = rs.getString(1);
                 String userName = rs.getString(2);
@@ -265,7 +266,7 @@ public class GymDao {
                 gymList.add(gymViewDto);
                 System.out.println("In GymVDao, gymViewDto instance: " +
                         ", gymName: " + gymName +
-                        ", userName: "+ userName
+                        ", userName: " + userName
                 );
             }
             System.out.println("GymDao, finByNumOfPeople: C");
@@ -281,7 +282,7 @@ public class GymDao {
         ResultSet rs = null;
         List<PersonViewDto> personList = new ArrayList<>();
 
-        try{
+        try {
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();
 
@@ -296,7 +297,7 @@ public class GymDao {
             System.out.println("GymDao, finByNumOfPeople: B");
 
 
-            while(rs.next()){
+            while (rs.next()) {
                 //G.Gym_id, g.name, COUNT(*) as Total_Machine
                 String personName = rs.getString(1);
 

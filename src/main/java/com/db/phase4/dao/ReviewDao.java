@@ -4,6 +4,7 @@ import com.db.phase4.dto.review.ReviewSaveReq;
 import com.db.phase4.dto.review.ReviewUpdateReq;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.util.ConnectionMaker;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,7 @@ public class ReviewDao {
         try {
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();
-            String sql = "DELETE FROM reviews WHERE review_id ="+reviewId;
+            String sql = "DELETE FROM reviews WHERE review_id =" + reviewId;
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,13 +50,13 @@ public class ReviewDao {
         stmt.executeQuery(sql);
     }
 
-/*
-    int reviewId;
-    String comment;
-    int rating;
-    LocalDate date;
-    String userName;
- */
+    /*
+        int reviewId;
+        String comment;
+        int rating;
+        LocalDate date;
+        String userName;
+     */
     public List<ReviewViewDto> findByGymId(int gymId) {
         Connection conn = null;
         Statement stmt = null;
@@ -67,11 +69,11 @@ public class ReviewDao {
             StringBuffer sb = new StringBuffer();
             sb.append("SELECT r.review_id, r.user_comment, r.rating, r.created_date, u.name ");
             sb.append("FROM review r, users u ");
-            sb.append("WHERE r.user_id = u.user_id AND r.gym_id ="+gymId);
+            sb.append("WHERE r.user_id = u.user_id AND r.gym_id =" + gymId);
 
             rs = stmt.executeQuery(sb.toString());
 
-            while(rs.next()){
+            while (rs.next()) {
                 int reviewId = rs.getInt(1);
                 String comment = rs.getString(2);
                 int rating = rs.getInt(3);

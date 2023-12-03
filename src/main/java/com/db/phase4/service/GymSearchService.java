@@ -30,7 +30,7 @@ public class GymSearchService {
     }
 
     public List<GymViewDto> findByNumOfMachine(String status) {
-        return  gymDao.findByNumOfMachine(status);
+        return gymDao.findByNumOfMachine(status);
     }
 
     public List<GymViewDto> findByNameOfGymAndUser(String status) {
