@@ -1,6 +1,7 @@
 package com.db.phase4.service;
 
 import com.db.phase4.dao.UserDao;
+import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,9 @@ public class UserService {
 
     public int findPtTrainerId(int userId) {
         return userDao.findPtTrainerId(userId);
+    }
+
+    public FilteredTrainerViewDto findTrainerById(int userId) {
+        return userDao.findTrainerById(userId);
     }
 }

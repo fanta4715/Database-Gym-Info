@@ -1,5 +1,6 @@
 package com.db.phase4.dao;
 
+import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import com.db.phase4.util.ConnectionMaker;
 
@@ -8,9 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -65,6 +70,52 @@ public class UserDao {
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
             return trainerId;
+        }
+    }
+
+    public FilteredTrainerViewDto findTrainerById(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        FilteredTrainerViewDto myTrainer = null;
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT t.name, t.trainer_id, t.specialization, t.work_year, t.birth_date, t.sex, t.contact ");
+            sb.append("FROM TRAINER t, USERS u ");
+            sb.append("WHERE u.trainer_id = t.trainer_id ");
+
+            rs = stmt.executeQuery(sb.toString());
+            rs.next();
+
+            String name = rs.getString(1);
+            int trainerId = rs.getInt(2);
+            String specialization = rs.getString(3);
+            int workYear = rs.getInt(4);
+            LocalDate birthDate = rs.getDate(5).toLocalDate();
+            String sex = rs.getString(6);
+            String contact = rs.getString(7);
+
+            myTrainer = FilteredTrainerViewDto.builder()
+                    .name(name)
+                    .trainerId(trainerId)
+                    .specialization(specialization)
+                    .workYear(workYear)
+                    .birthDate(birthDate)
+                    .sex(sex)
+                    .contact(contact)
+                    .gymName(null)
+                    .build();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return myTrainer;
         }
     }
 }
