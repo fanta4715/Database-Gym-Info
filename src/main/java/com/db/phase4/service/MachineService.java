@@ -1,5 +1,7 @@
-package com.db.phase4.machine;
+package com.db.phase4.service;
 
+import com.db.phase4.dao.MachineDao;
+import com.db.phase4.dto.MachineDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

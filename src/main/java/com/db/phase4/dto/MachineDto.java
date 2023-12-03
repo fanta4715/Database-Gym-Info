@@ -1,7 +1,6 @@
-package com.db.phase4.machine;
+package com.db.phase4.dto;
 
 
-import com.db.phase4.rental.RentalDto;
 import lombok.Getter;
 import lombok.Setter;
 

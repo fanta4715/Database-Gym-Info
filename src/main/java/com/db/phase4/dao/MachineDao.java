@@ -1,6 +1,6 @@
-package com.db.phase4.machine;
+package com.db.phase4.dao;
 
-import com.db.phase4.rental.RentalDto;
+import com.db.phase4.dto.MachineDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

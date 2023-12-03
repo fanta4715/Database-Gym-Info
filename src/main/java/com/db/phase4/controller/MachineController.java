@@ -1,5 +1,6 @@
-package com.db.phase4.machine;
+package com.db.phase4.controller;
 
+import com.db.phase4.service.MachineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

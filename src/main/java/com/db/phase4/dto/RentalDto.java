@@ -1,8 +1,6 @@
-package com.db.phase4.rental;
+package com.db.phase4.dto;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.ResultSet;
