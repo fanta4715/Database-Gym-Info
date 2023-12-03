@@ -1,6 +1,7 @@
 package com.db.phase4.dao;
 
 import com.db.phase4.dto.review.ReviewContentDto;
+import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewSaveReq;
 import com.db.phase4.dto.review.ReviewUpdateReq;
 import com.db.phase4.dto.review.ReviewViewDto;
@@ -41,21 +42,7 @@ public class ReviewDao {
 
     }
 
-    public void findAll() throws SQLException {
-        Connection conn = connectionMaker.createConnection();
-        Statement stmt = conn.createStatement();
 
-        String sql = "SELECT * FROM review";
-        stmt.executeQuery(sql);
-    }
-
-/*
-    int reviewId;
-    String comment;
-    int rating;
-    LocalDate date;
-    String userName;
- */
     public List<ReviewViewDto> findByGymId(int gymId) {
         Connection conn = null;
         Statement stmt = null;
@@ -181,4 +168,47 @@ public class ReviewDao {
             return reviewContentDto;
         }
     }
+
+    public List<ReviewCountDto> findByGenderAndAge(String gender, LocalDate lowerBirthday, LocalDate upperBirthday) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<ReviewCountDto> reviewCounts = new ArrayList<>();
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT U.Name, TO_CHAR(U.Birth_date,'YYYY-MM-DD') as BIRTHDAY,U.Sex, COUNT(*) as Review_COUNT ");
+            sb.append("FROM REVIEW R JOIN USERS U ON R.User_id = U.User_id ");
+            sb.append("WHERE U.Sex = '"+gender+"' AND U.Birth_date < TO_DATE('"+upperBirthday+"','YYYY-MM-DD')");
+            sb.append("AND U.Birth_date > TO_DATE('"+lowerBirthday+"','YYYY-MM-DD') ");
+            sb.append("GROUP BY U.Name, TO_CHAR(U.Birth_date,'YYYY-MM-DD'),U.Sex ");
+            sb.append("ORDER BY COUNT(*) ");
+
+            rs = stmt.executeQuery(sb.toString());
+
+            while(rs.next()){
+                String name = rs.getString(1);
+                LocalDate birthdate = rs.getDate(2).toLocalDate();
+                String sex = rs.getString(3);
+                int reviewCount = rs.getInt(4);
+
+                reviewCounts.add(ReviewCountDto.builder()
+                        .birthdate(birthdate)
+                        .reviewCount(reviewCount)
+                        .name(name)
+                        .sex(sex)
+                        .build());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return reviewCounts;
+        }
+    }
+
+//    public
 }

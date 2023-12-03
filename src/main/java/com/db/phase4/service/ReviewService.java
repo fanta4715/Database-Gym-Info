@@ -2,10 +2,12 @@ package com.db.phase4.service;
 
 import com.db.phase4.dao.ReviewDao;
 import com.db.phase4.dto.review.ReviewContentDto;
+import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewSaveReq;
 import com.db.phase4.dto.review.ReviewUpdateReq;
 import com.db.phase4.dto.review.ReviewViewDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -34,5 +36,9 @@ public class ReviewService {
 
     public ReviewContentDto findById(int reviewId) {
         return reviewDao.findById(reviewId);
+    }
+
+    public List<ReviewCountDto> findByGenderAndAge(String gender, LocalDate lowerBirthday, LocalDate upperBirthday) {
+        return reviewDao.findByGenderAndAge(gender, lowerBirthday, upperBirthday);
     }
 }

@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserDao userDao;
 
-    public void register(int userId, int trainerId) {
-        userDao.register(new TrainerRegisterDto(userId, trainerId));
+    public void registerTrainer(TrainerRegisterDto trainerRegisterDto) {
+        userDao.registerTrainer(trainerRegisterDto);
+    }
+
+    public int findPtTrainerId(int userId) {
+        return userDao.findPtTrainerId(userId);
     }
 }

@@ -3,10 +3,13 @@ package com.db.phase4.controller;
 import com.db.phase4.dto.GymViewDto;
 import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.RentalItemViewDto;
+import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewViewDto;
+import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerViewDto;
 import com.db.phase4.service.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class ViewController {
     private final TrainerService trainerService;
     private final ReviewService reviewService;
     private final RentalService rentalService;
+    private final UserService userService;
 
     @GetMapping("/login")
     public String loginView() {
@@ -64,6 +68,7 @@ public class ViewController {
     @GetMapping("/user/{userId}/gym/{gymId}/trainer")
     public String trainerView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         List<TrainerViewDto> trainers = trainerService.findByGymId(gymId);
+        model.addAttribute("ptTrainerId", userService.findPtTrainerId(userId));
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
         model.addAttribute("trainers", trainers);
@@ -79,12 +84,34 @@ public class ViewController {
         model.addAttribute("reviews", reviews);
         return "review";
     }
-//
-//    @GetMapping("/user/{userId}/detail")
-//    public String userDetailView(@PathVariable int userId, Model model) {
-////        UserViewDto user = userService.findById(userId);
-////        model.addAttribute("user", user);
-//        return "user-detail";
-//    }
 
+    @GetMapping("/trainer-search")
+    public String trainerSearchView() {
+        return "trainer-search";
+    }
+
+    @GetMapping("/review-search")
+    public String reviewSearchView() {
+        return "review-search";
+    }
+    @GetMapping("/searched-trainer")
+    public String searchedTrainerView(@RequestParam String specialization,
+                                      @RequestParam int lowerYear,
+                                      @RequestParam int upperYear,
+                                      Model model) {
+        List<FilteredTrainerViewDto> trainers = trainerService.findBySpecializationAndWorkYear(specialization, lowerYear, upperYear);
+        model.addAttribute("trainers", trainers);
+        return "trainer-list";
+    }
+
+    @GetMapping("/searched-review")
+    public String searchedReviewView(@RequestParam String gender,
+                                     @RequestParam LocalDate lowerBirthday,
+                                     @RequestParam LocalDate upperBirthday,
+                                     Model model) {
+
+        List<ReviewCountDto> reviewers = reviewService.findByGenderAndAge(gender, lowerBirthday, upperBirthday);
+        model.addAttribute("reviewers", reviewers);
+        return "review-list";
+    }
 }
