@@ -65,6 +65,7 @@
 <!--</div>-->
 <div class="add-review-form">
     <form action="/review-update" method="post">
+        <input type="hidden" id="reviewId" name="reviewId" th:value="${reviewId}">
         <label for="userId">User ID:</label>
         <input type="text" id="userId" name="userId" th:value="${userId}" required><br>
 
@@ -81,7 +82,7 @@
         </select><br>
 
         <label for="comment">Comment:</label><br>
-        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"  required></textarea><br>
 
         <button type="submit">Submit Review</button>
     </form>

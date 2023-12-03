@@ -3,14 +3,13 @@ package com.db.phase4.dto.review;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class ReviewUpdateReq {
-    private int reviewId;
-    private int userId;
-    private int gymId;
-    private String comment;
+@ToString
+public class ReviewContentDto {
     private int rating;
+    private String comment;
 }
