@@ -64,9 +64,9 @@
 <!--    </form>-->
 <!--</div>-->
 <div class="add-review-form">
-    <form th:action="@{'/' + ${gymId} + '/review'}"  method="post">
+    <form action="/review-save"  method="post">
     <label for="userId">User ID:</label>
-        <input type="text" id="userId" name="userId"   required><br>
+        <input type="text" id="userId" name="userId" required><br>
 
         <label for="gymId">Gym ID:</label>
         <input type="text" id="gymId" name="gymId" required><br>
@@ -81,7 +81,7 @@
         </select><br>
 
         <label for="comment">Comment:</label><br>
-        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"   required></textarea><br>
 
         <button type="submit">Submit Review</button>
     </form>

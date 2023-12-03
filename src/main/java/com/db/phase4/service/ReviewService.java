@@ -13,15 +13,11 @@ import org.springframework.stereotype.Service;
 public class ReviewService {
     private final ReviewDao reviewDao;
 
-    public void delete(String reviewId) {
+    public void delete(int reviewId) {
         reviewDao.deleteReview(reviewId);
     }
 
-//    public void save(ReviewSaveReq reviewReq) {
-//        reviewDao.save(reviewReq);
-//    }
-
-    public List<ReviewViewDto> findByGymId(String gymId) {
+    public List<ReviewViewDto> findByGymId(int gymId) {
         return reviewDao.findByGymId(gymId);
     }
 
