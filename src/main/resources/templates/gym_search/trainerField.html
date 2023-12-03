@@ -6,50 +6,100 @@
     <title>Trainer of Gyms Search Results</title>
     <style>
         body {
-            background-color: #ecf0f5;
             font-family: Arial, sans-serif;
-            color: #333;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        #gym-search-container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #ffffff;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            overflow: hidden; /* Hide overflow content */
         }
 
-        h1 {
-            color: #3498db;
+        .header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        .controls {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
-            max-height: 300px; /* Set a maximum height for the ul */
-            overflow-y: auto; /* Enable vertical scrollbar if needed */
+        .jh-button, form input[type="submit"] {
+            background-color: #1ca086;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            display: block;
+            width: 200px;
+            margin: 10px auto;
         }
 
-        li {
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form input[type="text"] {
+            padding: 10px;
             margin-bottom: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            width: 200px;
         }
 
-        span {
-            display: inline-block;
-            padding: 8px;
-            border-radius: 5px;
-            margin-right: 10px;
-            width: 100px;
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .rental-list {
+            margin-top: 50px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -58,17 +108,27 @@
 <div id="gym-search-container">
     <h1>Gym Search Results By Trainer's Specialization</h1>
 
-    <!-- gymList를 반복하여 각 체육관 정보를 표시 -->
-    <ul>
-        <!-- Thymeleaf의 each 디렉티브를 사용하여 반복 -->
-        <li th:each="trainer : ${trainerList}">
-            <span th:text="${trainer.gymName}"></span>
-            <span th:text="${trainer.trainerName}"></span>
-            <span th:text="${trainer.specialization}"></span>
-            <span th:text="${trainer.contact}"></span>
-        </li>
-    </ul>
+    <table>
+        <thead>
+        <tr>
+            <th>GYM NAME</th>
+            <th>TRAINER NAME</th>
+            <th>SPECIALIZATION</th>
+            <th>CONTACT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf's each directive to iterate over the trainerList -->
+        <tr th:each="trainer : ${trainerList}">
+            <td th:text="${trainer.gymName}"></td>
+            <td th:text="${trainer.trainerName}"></td>
+            <td th:text="${trainer.specialization}"></td>
+            <td th:text="${trainer.contact}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 
 </body>
 </html>

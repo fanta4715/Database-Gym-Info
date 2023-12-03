@@ -312,4 +312,49 @@ public class GymDao {
         }
         return personList;
     }
+
+    public List<com.db.phase4.dto.GymViewDto> findAll(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        List<com.db.phase4.dto.GymViewDto> gyms = new ArrayList<>();
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+//            String name;
+//            String location;
+//            String contact;
+//            int capacity;
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT g.gym_id, g.name, g.location, g.contact, g.capacity ");
+            sb.append("FROM GYM g, ENROLLS e ");
+            sb.append("WHERE g.gym_id = e.gym_id AND e.user_id =" + userId);
+
+            rs = stmt.executeQuery(sb.toString());
+
+            while (rs.next()) {
+                int gymId = rs.getInt(1);
+                String name = rs.getString(2);
+                String location = rs.getString(3);
+                String contact = rs.getString(4);
+                int capacity = rs.getInt(5);
+                gyms.add(com.db.phase4.dto.GymViewDto.builder()
+                        .gymId(gymId)
+                        .name(name)
+                        .contact(contact)
+                        .location(location)
+                        .capacity(capacity)
+                        .build());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return gyms;
+        }
+    }
+
 }
