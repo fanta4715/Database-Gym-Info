@@ -13,21 +13,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ReviewDao {
     private final ConnectionMaker connectionMaker;
-    public void save(String review, String trainerName) throws SQLException {
-        Connection conn = connectionMaker.createConnection();
-        Statement stmt = conn.createStatement();
 
-        String sql = "INSERT INTO reviews (review, trainerName) VALUES ('" + review + "', '" + trainerName + "')";
-        stmt.executeUpdate(sql);
-    }
-
-    public void deleteReview(String reviewId) {
+    public void deleteReview(int reviewId) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -60,7 +55,7 @@ public class ReviewDao {
     LocalDate date;
     String userName;
  */
-    public List<ReviewViewDto> findByGymId(String gymId) {
+    public List<ReviewViewDto> findByGymId(int gymId) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -97,7 +92,7 @@ public class ReviewDao {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-
+        log.info("save!!");
         try {
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();

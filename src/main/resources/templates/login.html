@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; /* Added to align content vertically */
+      height: 100vh;
+    }
+    
+    h1 {
+      font-size: 3em; /* Adjust the font size as needed */
+    }
+    
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px; /* Adjust margin for spacing */
+    }
+    
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    
+    .login-container input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    .login-container input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>GYM INFO</h1>
+  <div class="login-container">
+    <h2 class="header">로그인 하세요</h2>
+    <form action="/login" method="post">
+      <input type="text" placeholder="사용자 ID" name="userID">
+      <input type="text" placeholder="이름" name="userName">
+      <input type="submit" value="로그인">
+    </form>
+
+  </div>
+
+<!--  <script>-->
+<!--    function login() {-->
+<!--      var userID = document.getElementById('userID').value;-->
+<!--      var userName = document.getElementById('userName').value;-->
+
+<!--      // Construct the target URL-->
+<!--      var targetURL = '/user/' + userID + '/gym';-->
+
+<!--      // Redirect to the target URL-->
+<!--      window.location.href = targetURL;-->
+<!--    }-->
+<!--  </script>-->
+</body>
+</html>
+

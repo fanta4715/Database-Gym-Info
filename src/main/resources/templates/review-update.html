@@ -64,15 +64,15 @@
 <!--    </form>-->
 <!--</div>-->
 <div class="add-review-form">
-    <form th:action="@{'/' + ${gymId} + '/review'}" method="post">
+    <form action="/review-update" method="post">
         <label for="userId">User ID:</label>
-        <input type="text" id="userId" name="userId" th:field="*{userId}" required><br>
+        <input type="text" id="userId" name="userId" th:value="${userId}" required><br>
 
         <label for="gymId">Gym ID:</label>
-        <input type="readonly" id="gymId" name="gymId" th:value="*{gymId}" required><br>
+        <input type="readonly" id="gymId" name="gymId" th:value="${gymId}" required><br>
 
         <label for="rating">Rating:</label>
-        <select id="rating" name="rating" th:field="*{rating}" required>
+        <select id="rating" name="rating"  required>
             <option value="1">★</option>
             <option value="2">★★</option>
             <option value="3">★★★</option>
@@ -81,7 +81,7 @@
         </select><br>
 
         <label for="comment">Comment:</label><br>
-        <textarea id="comment" name="comment" th:field="*{comment}" rows="4" cols="50" required></textarea><br>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
 
         <button type="submit">Submit Review</button>
     </form>
