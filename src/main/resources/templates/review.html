@@ -69,8 +69,9 @@
 <body>
 <div class="header">
   <div class="search-container">
-<!--    <input type="text" id="searchInput" placeholder="Search Reviews">-->
-    <button onclick="searchReviews()">Setting Filter</button>
+    <a href="/review-search">
+      <button>review search</button>
+    </a>
   </div>
 <!--  <button class="add-review-button" id="addReviewButton" onclick="addReview()">Add Review</button>-->
   <a th:href="@{/user/{userId}/gym/{gymId}/review-save(userId=${userId}, gymId=${gymId})}">
@@ -113,17 +114,6 @@
       });
     }
 
-    function addReview() {
-      var gymId = document.getElementById("gymId").value;
-
-      document.getElementById("addReviewButton").addEventListener("click", function() {
-        // gymId를 사용하여 URL을 동적으로 생성
-        var url = '/' + gymId + '/review-save';
-
-        // 생성된 URL을 사용하여 리디렉션
-        window.location.href = url;
-      });
-    }
   </script>
 </body>
 </html>
