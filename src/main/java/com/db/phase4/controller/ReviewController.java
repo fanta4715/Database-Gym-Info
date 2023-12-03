@@ -1,10 +1,11 @@
 package com.db.phase4.controller;
 
+import com.db.phase4.dto.review.ReviewContentDto;
+import com.db.phase4.dto.review.ReviewDeleteReq;
 import com.db.phase4.dto.review.ReviewSaveReq;
 import com.db.phase4.dto.review.ReviewUpdateReq;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.service.ReviewService;
-import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,22 +40,24 @@ public class ReviewController {
         return "redirect:/user/"+reviewSaveReq.getUserId()+"/gym/"+reviewSaveReq.getGymId()+"/review";
     }
 
-//    @PostMapping("/review-delete")
-//    public String deleteReview(@RequestParam("reviewId") int reviewId) {
-//        reviewService.delete(reviewId);
-//        return "redirect:/"++"/review";
-//    }
+    @PostMapping("/review-delete")
+    public String deleteReview(@ModelAttribute ReviewDeleteReq reviewDeleteReq) {
+        reviewService.delete(reviewDeleteReq.getReviewId());
+        return "redirect:/user/"+reviewDeleteReq.getUserId()+
+                "/gym/"+reviewDeleteReq.getGymId()+"/review";
+    }
 
-    @GetMapping("/user/{userId}/gym/{gymId}/review-update")
-    public String updateView(@PathVariable int gymId, @PathVariable int reviewId, Model model) {
+    @GetMapping("/user/{userId}/gym/{gymId}/review/{reviewId}/review-update")
+    public String updateView(@PathVariable int userId, @PathVariable int gymId, @PathVariable int reviewId, Model model) {
         model.addAttribute("reviewId", reviewId);
+        model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
         return "review-update";
     }
 
     @PostMapping("/review-update")
-    public String updateReview(@PathVariable int gymId, @ModelAttribute ReviewUpdateReq reviewReq) {
+    public String updateReview(@ModelAttribute ReviewUpdateReq reviewReq) {
         reviewService.update(reviewReq);
-        return "redirect:/{"+gymId+"}/review";
+        return "redirect:/user/"+reviewReq.getUserId()+"/gym/"+reviewReq.getGymId()+"/review";
     }
 }

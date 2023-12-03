@@ -1,5 +1,6 @@
 package com.db.phase4.dao;
 
+import com.db.phase4.dto.review.ReviewContentDto;
 import com.db.phase4.dto.review.ReviewSaveReq;
 import com.db.phase4.dto.review.ReviewUpdateReq;
 import com.db.phase4.dto.review.ReviewViewDto;
@@ -30,7 +31,7 @@ public class ReviewDao {
         try {
             conn = connectionMaker.createConnection();
             stmt = conn.createStatement();
-            String sql = "DELETE FROM reviews WHERE review_id ="+reviewId;
+            String sql = "DELETE FROM review WHERE review_id ="+reviewId;
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,6 +148,37 @@ public class ReviewDao {
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
+        }
+    }
+
+    public ReviewContentDto findById(int reviewId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        ReviewContentDto reviewContentDto = null;
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("SELECT r.user_comment, r.rating ");
+            sb.append("FROM review r ");
+            sb.append("WHERE r.review_id ="+reviewId);
+
+            rs = stmt.executeQuery(sb.toString());
+
+            rs.next();
+            String comment = rs.getString(1);
+            int rating = rs.getInt(2);
+            reviewContentDto = new ReviewContentDto(rating, comment);
+            log.info("reviewContentDto: "+reviewContentDto);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return reviewContentDto;
         }
     }
 }
