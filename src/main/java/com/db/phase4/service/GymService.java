@@ -1,8 +1,10 @@
 package com.db.phase4.service;
 
 import com.db.phase4.dao.GymDao;
-import com.db.phase4.dto.GymViewDto;
+
 import java.util.List;
+
+import com.db.phase4.dto.GymViewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
