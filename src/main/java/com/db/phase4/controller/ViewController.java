@@ -5,17 +5,16 @@ import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.RentalItemViewDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.TrainerViewDto;
-import com.db.phase4.service.GymService;
-import com.db.phase4.service.MachineService;
-import com.db.phase4.service.RentalItemService;
-import com.db.phase4.service.ReviewService;
-import com.db.phase4.service.TrainerService;
+import com.db.phase4.service.*;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class ViewController {
     private final MachineService machineService;
     private final TrainerService trainerService;
     private final ReviewService reviewService;
+    private final RentalService rentalService;
 
     @GetMapping("/login")
     public String loginView() {
@@ -46,23 +46,21 @@ public class ViewController {
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/rental-item")
-    public String rentalItemView(@PathVariable int userId, @PathVariable int gymId, Model model) {
-        List<RentalItemViewDto> rentalItems = rentalItemService.findByGymId(gymId);
+    public String rentalItemView(@PathVariable int userId, @PathVariable String gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
-        model.addAttribute("rentalItems", rentalItems);
-        return "rental-item";
+        model.addAttribute("rentals", rentalService.rentalSearchById(gymId));
+        return "rental-search";
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/machine")
-    public String machineView(@PathVariable int userId, @PathVariable int gymId, Model model) {
-        List<MachineViewDto> machines = machineService.findByGymId(gymId);
+    public String machineView(@PathVariable int userId, @PathVariable String gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
-        model.addAttribute("machines", machines);
-        return "machine";
+        model.addAttribute("machines", machineService.machineSearchById(gymId));
+        return "machine-search";
     }
-//
+
     @GetMapping("/user/{userId}/gym/{gymId}/trainer")
     public String trainerView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         List<TrainerViewDto> trainers = trainerService.findByGymId(gymId);
@@ -71,7 +69,8 @@ public class ViewController {
         model.addAttribute("trainers", trainers);
         return "trainer";
     }
-//
+
+    //
     @GetMapping("/user/{userId}/gym/{gymId}/review")
     public String reviewView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         List<ReviewViewDto> reviews = reviewService.findByGymId(gymId);

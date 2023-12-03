@@ -2,10 +2,12 @@ package com.db.phase4.dao;
 
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import com.db.phase4.util.ConnectionMaker;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

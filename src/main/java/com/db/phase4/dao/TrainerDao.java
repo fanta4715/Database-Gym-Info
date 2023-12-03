@@ -3,6 +3,7 @@ package com.db.phase4.dao;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.TrainerViewDto;
 import com.db.phase4.util.ConnectionMaker;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TrainerDao {
     private final ConnectionMaker connectionMaker;
+
     public List<TrainerViewDto> findByGymId(int gymId) {
         Connection conn = null;
         Statement stmt = null;

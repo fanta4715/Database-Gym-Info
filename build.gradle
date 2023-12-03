@@ -31,7 +31,7 @@ dependencies {
 	implementation 'javax.servlet:jstl:1.2' // 또는 다른 버전
 	implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
 
-	//Thymeleaf
+	//thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
