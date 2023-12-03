@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Gym Id : <span th:text="${param.gymId}"></span></h1>
+    <h1>Gym Id : <span th:text="${gymId}"></span></h1>
     <div class="rental-list">
         <table>
             <thead>
@@ -25,8 +25,8 @@
                 <td>
                     <form action="/rental-request" method="get">
                         <input type="hidden" name="itemName" th:value="${rental.itemName}">
-                        <input type="hidden" name="gymId" th:value="${param.gymId}">
-                        <input type="hidden" name="userId" th:value="${param.userId}">
+                        <input type="hidden" name="gymId" th:value="${gymId}">
+                        <input type="hidden" name="userId" th:value="${userId}">
                         <input type="submit" value="대여 신청">
                     </form>
                 </td>

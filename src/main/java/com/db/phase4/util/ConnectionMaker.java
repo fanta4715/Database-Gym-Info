@@ -38,6 +38,7 @@ public class ConnectionMaker {
             e.printStackTrace();
         }
     }
+
     public void closeAllWthPstmt(Connection conn, PreparedStatement stmt, ResultSet rs) {
         try {
             if (rs != null) rs.close();

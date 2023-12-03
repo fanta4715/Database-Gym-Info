@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MachineController {
     private final MachineService machineService;
 
-    @GetMapping("/machine-search")
-    public String machineSearch(@RequestParam String gymId, @RequestParam String userId,Model model) {
-        model.addAttribute("machines", machineService.machineSearchById(gymId));
-        return "machine-search";
-    }
 
 //            System.out.print("15. 운동기구 예약\n ");
 //            sb.append("UPDATE USERS");

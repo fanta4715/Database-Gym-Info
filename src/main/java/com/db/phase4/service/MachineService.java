@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import com.db.phase4.dto.MachineViewDto;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class MachineService {
     public void reserveMachine(String gymId, String machineId, String userId) {
         machineDao.reserveMachine(gymId, machineId, userId);
     }
+
     public List<MachineViewDto> findByGymId(int gymId) {
         return machineDao.findByGymId(gymId);
     }

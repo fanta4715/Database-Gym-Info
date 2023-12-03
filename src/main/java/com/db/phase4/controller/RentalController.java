@@ -12,17 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RentalController {
     private final RentalService rentalService;
 
-    @GetMapping("/my-gym")
-    public String index() {
-        return "my-gym";
-    }
-
-    @GetMapping("/rental-search")
-    public String rentalSearch(@RequestParam String gymId, Model model) {
-        model.addAttribute("rentals", rentalService.rentalSearchById(gymId));
-        return "rental-search";
-    }
-
     //            System.out.print("17. 대여물품 대여\n "
 //            "INSERT INTO RENTS(User_id, Gym_id, Item_name) VALUES('" + user_id + "', '" + gym_id + "', '" + item_name + "')"
     @GetMapping("/rental-request")

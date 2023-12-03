@@ -20,7 +20,7 @@ public class ReviewController {
 
     @GetMapping("/user/{userId}/gym/{gymId}/review-save")
     public String saveView(@PathVariable int gymId, @PathVariable int userId, Model model) {
-        model.addAttribute("userId",userId);
+        model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
         return "review-save";
     }
@@ -30,7 +30,7 @@ public class ReviewController {
         reviewService.save(reviewSaveReq);
         //모델에 붙이는 로직을 실행하지 않았음. 저장하는 로직과 화면을 띄우는 로직을 분리하기 위해 아웃소싱하는 게
         //redirect의 목적인듯.
-        return "redirect:/user/"+reviewSaveReq.getUserId()+"/gym/"+reviewSaveReq.getGymId()+"/review";
+        return "redirect:/user/" + reviewSaveReq.getUserId() + "/gym/" + reviewSaveReq.getGymId() + "/review";
     }
 
 //    @PostMapping("/review-delete")
@@ -49,6 +49,6 @@ public class ReviewController {
     @PostMapping("/review-update")
     public String updateReview(@PathVariable int gymId, @ModelAttribute ReviewUpdateReq reviewReq) {
         reviewService.update(reviewReq);
-        return "redirect:/{"+gymId+"}/review";
+        return "redirect:/{" + gymId + "}/review";
     }
 }

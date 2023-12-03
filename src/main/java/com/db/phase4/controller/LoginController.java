@@ -12,7 +12,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam("userID") int userID,
                         @RequestParam("userName") String userName) {
-        return "redirect:/user/"+userID+"/gym";
+        return "redirect:/user/" + userID + "/gym";
     }
 
 }

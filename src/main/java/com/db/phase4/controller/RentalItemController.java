@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class RentalItemController {
     private final RentalItemService rentalItemService;
-    
+
 }
