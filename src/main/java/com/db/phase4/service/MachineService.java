@@ -27,6 +27,7 @@ public class MachineService {
 
     public void reserveMachine(String gymId, String machineId, String userId) {
         machineDao.reserveMachine(gymId, machineId, userId);
+    }
     public List<MachineViewDto> findByGymId(int gymId) {
         return machineDao.findByGymId(gymId);
     }

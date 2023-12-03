@@ -1,14 +1,14 @@
 package com.db.phase4.dao;
 
+import com.db.phase4.dto.MachineDto;
 import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.RentalItemViewDto;
 import com.db.phase4.util.ConnectionMaker;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -55,32 +55,25 @@ public class MachineDao {
                         build()
                 );
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
             return machines;
         }
-    @Value("${TEST_ID}")
-    String ID;
-    @Value("${TEST_PW}")
-    String PW;
-    @Value("${TEST_URL}")
-    String URL;
+    }
 
     public List<MachineDto> getWithGymId(String gymId) {
         Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
         try {
-            conn = DriverManager.getConnection(URL, ID, PW);
-
-            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            conn.setAutoCommit(false);
+            conn = connectionMaker.createConnection();
 
             String sql = "SELECT * FROM MACHINE M JOIN GYM G ON G.Gym_id = M.Gym_id WHERE G.Gym_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, gymId);
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             List<MachineDto> machineDtos = MachineDto.of(rs);
 
@@ -97,32 +90,25 @@ public class MachineDao {
             }
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            connectionMaker.closeAllWthPstmt(conn, pstmt, rs);
         }
         return new ArrayList<>();
     }
 
     public void requestMachine(String gymId, String machineId, String userId) {
         Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
         try {
-            conn = DriverManager.getConnection(URL, ID, PW);
-
-            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            conn.setAutoCommit(false);
+            conn = connectionMaker.createConnection();
 
             // 유저가 해당 gym에 등록되어있는지 확인
             String sql = "SELECT * FROM GYM G JOIN MACHINE M ON G.Gym_id = M.Gym_id JOIN ENROLLS E ON E.Gym_id = G.Gym_id WHERE G.Gym_id = ? AND M.Machine_id = ? AND E.User_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, gymId);
             pstmt.setString(2, machineId);
             pstmt.setString(3, userId);
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
             if (!rs.next()) {
                 throw new SQLException("user Gym와 machine Gym이 일치하지 않습니다.");
             }
@@ -149,13 +135,7 @@ public class MachineDao {
             }
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            connectionMaker.closeAllWthPstmt(conn, pstmt, rs);
         }
     }
 
