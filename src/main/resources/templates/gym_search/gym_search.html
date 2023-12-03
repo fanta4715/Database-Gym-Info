@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>체육관 조회 페이지</title>
+  <style>
+    body {
+      background-color: #ecf0f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #gym-search-container {
+      max-width: 800px;
+      width: 100%;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #3498db;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #ffffff;
+      padding: 10px 15px;
+      width: 200px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    a {
+      width: 400px;
+    }
+    .age-inputs {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Style for blue buttons without underlines */
+    #gym-search-container a {
+      display: inline-block;
+      background-color: #3498db;
+      color: #ffffff;
+      padding: 10px 15px;
+      margin: 5px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    #gym-search-container a:hover {
+      background-color: #2c81ba;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="gym-search-container">
+  <h2 style="color: #162360">GYM SEARCH PAGE</h2>
+  <a href="http://localhost:8080/gym/search/numOfPeople">등록 인원 일정 수 이하인 체육관 조회</a>
+  <a href="http://localhost:8080/gym/search/trainer/specialization">특정 전문분야의 트레이너 정보 및 근무하는 체육관</a>
+  <a href="http://localhost:8080/gym/search/review/high">체육관 리뷰 평점 높은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/review/low">체육관 리뷰 평점 낮은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/numOfMachine/high">체육관 운동기구 개수 높은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/numOfMachine/low">체육관 운동기구 개수 낮은 순으로 조회</a>
+  <a href="http://localhost:8080/gym/search/gymAndUser/high">체육관 및 회원 이름 순으로 내림차순 정렬</a>
+  <a href="http://localhost:8080/gym/search/gymAndUser/low">체육관 및 회원 이름 순으로 오름차순 정렬</a>
+  <a href="http://localhost:8080/gym/search/trainerAndUserDistinct">모든 체육관의 트레이너 및 회원의 이름 조회, 중복 제거</a>
+</div>
+
+<script>
+  function searchGyms() {
+    // TODO: 선택된 기준에 따라 체육관을 조회하는 로직을 추가하세요.
+    alert("체육관을 조회합니다.");
+  }
+</script>
+
+</body>
+
+</html>
