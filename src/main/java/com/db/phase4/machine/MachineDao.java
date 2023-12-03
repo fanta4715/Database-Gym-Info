@@ -27,7 +27,7 @@ public class MachineDao {
             conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             conn.setAutoCommit(false);
 
-            String sql = "SELECT * FROM GYM G JOIN MACHINE M ON G.Gym_id = M.Gym_id WHERE G.Gym_id = ?";
+            String sql = "SELECT * FROM MACHINE M JOIN GYM G ON G.Gym_id = M.Gym_id WHERE G.Gym_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, gymId);
             ResultSet rs = pstmt.executeQuery();
