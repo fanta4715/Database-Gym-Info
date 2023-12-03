@@ -1,8 +1,6 @@
 package com.db.phase4.dao;
 
-import com.db.phase4.dto.gym.GymViewDto;
-import com.db.phase4.dto.gym.PersonViewDto;
-import com.db.phase4.dto.gym.TrainerViewDto;
+import com.db.phase4.dto.gym.*;
 import com.db.phase4.util.ConnectionMaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -358,4 +357,110 @@ public class GymDao {
         }
     }
 
+    public List<GymAndUserCountViewDto> findByUserAge(String gender, String startYear, String endYear) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        List<GymAndUserCountViewDto> gymList = new ArrayList<>();
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            String whereFormat = "WHERE U.Sex = '%s' AND U.Birth_date < TO_DATE('%s','YYYY-MM-DD')";
+
+            sb.append("SELECT COUNT (*) AS USERS_NUM, G.Name AS GYM_NAME, G.Gym_id, U.Sex");
+            sb.append(" FROM (ENROLLS E JOIN GYM G ON E.Gym_id = G.Gym_id) JOIN USERS U ON U.User_id = E.User_id");
+            if(gender.equals("OTHER")){
+                sb.append(" WHERE U.Birth_date BETWEEN '" + startYear + "-01-01' AND '" + endYear
+                        + "-12-31'");
+            }else{
+                sb.append(" WHERE U.Sex = '" + gender + "' AND U.Birth_date BETWEEN '" + startYear + "-01-01' AND '" + endYear
+                        + "-12-31'");
+            }
+            sb.append(" GROUP BY G.Name, G.Gym_id, U.Sex");
+            sb.append(" ORDER BY USERS_NUM DESC");
+            sb.append(" FETCH FIRST 10 ROWS ONLY");
+
+            rs = stmt.executeQuery(sb.toString());
+
+            while (rs.next()) {
+                int userNumber = rs.getInt(1);
+                String gymName = rs.getString(2);
+                int gymId = rs.getInt(3);
+                String sex = rs.getString(4);
+
+                GymAndUserCountViewDto gymAndUserCountViewDto = new GymAndUserCountViewDto(userNumber, gymName, gymId, sex);
+                gymList.add(gymAndUserCountViewDto);
+                System.out.println("In GymVDao, gymViewDto instance: " +
+                        ", userNumber: " + userNumber +
+                        ", gymName: " + gymName +
+                        ", gymId: " + gymId +
+                        ", gender: " + sex
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return gymList;
+        }
+    }
+
+    public List<UserViewDto> findByUserWeight(String userWeight) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        List<UserViewDto> userList = new ArrayList<>();
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            String whereFormat = "WHERE U.Sex = '%s' AND U.Birth_date < TO_DATE('%s','YYYY-MM-DD')";
+
+            sb.append("SELECT U.NAME AS USER_NAME, G.NAME AS GYM_NAME");
+            sb.append(" FROM USERS U");
+            sb.append(" JOIN ENROLLS E ON U.USER_ID = E.USER_ID");
+            sb.append(" JOIN GYM G ON E.GYM_ID = G.GYM_ID");
+            sb.append(" JOIN HEALTH_INFO H ON U.USER_ID = H.USER_ID");
+            sb.append(" WHERE H.WEIGHT >= " + userWeight);
+            sb.append(" ORDER BY H.WEIGHT DESC");
+            sb.append(" FETCH FIRST 10 ROWS ONLY");
+
+            rs = stmt.executeQuery(sb.toString());
+
+            while (rs.next()) {
+                String userName = rs.getString(1);
+                String gymName = rs.getString(2);
+
+//                private int userId;
+//                private String userName;
+//                private int usingMachineId;
+//                private int reserveMachineId;
+//                private int trainerId;
+//                private String birthDate;
+//                private String sex;
+//                private String contact;
+//                private int gymId;
+//                private String gymName;
+//
+                UserViewDto userViewDto = new UserViewDto(0,userName,0,0,0,"0000-00-00","","",0, gymName);
+                userList.add(userViewDto);
+                System.out.println("In GymVDao, userViewDto instance: " +
+                        ", userName: " + userName +
+                        ", gymName: " + gymName
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return userList;
+        }
+    }
 }

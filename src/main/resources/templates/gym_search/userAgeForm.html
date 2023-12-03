@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trainer Specialization</title>
+</head>
+<body>
+
+<form action="http://localhost:8080/gym/search/userAge" method="post">
+  <h1>Trainer Specialization</h1>
+  <label>성별
+    <select name="gender">
+      <option value="M">남성</option>
+      <option value="F">여성</option>
+      <option value="OTHER">기타</option>
+    </select>
+  </label>
+  <label>탄생연도 이상
+    <input type="text" name="startYear">
+  </label>
+  <label>탄생연도 이하
+    <input type="text" name="endYear">
+  </label>
+  <input type="submit" value="전송">
+</form>
+
+</body>
+</html>

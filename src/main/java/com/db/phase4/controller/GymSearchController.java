@@ -1,13 +1,12 @@
 package com.db.phase4.controller;
 
-import com.db.phase4.dto.gym.GymViewDto;
-import com.db.phase4.dto.gym.PersonViewDto;
-import com.db.phase4.dto.gym.TrainerViewDto;
+import com.db.phase4.dto.gym.*;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.service.GymSearchService;
 import com.db.phase4.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,5 +84,29 @@ public class GymSearchController {
         return "gym_search/person";
     }
 
+    @PostMapping("/gym/search/userAge")
+    public String userAgeResultView(@RequestParam String gender, @RequestParam String startYear, @RequestParam String endYear, Model model) throws Exception {
+        System.out.println("in controller, gender: " + gender + " stratYear: " + startYear + " endYear: " + endYear);
+        List<GymAndUserCountViewDto> gymList = gymSearchService.findByUserAge(gender, startYear, endYear);
+        model.addAttribute("gymList",gymList);
+        return "gym_search/userAge";
+    }
+
+    @GetMapping("/gym/search/userAge")
+    public String userAgeResultView(Model model) throws Exception {
+        return "gym_search/userAgeForm";
+    }
+
+    @PostMapping("/gym/search/userWeight")
+    public String userWeightResultView(@RequestParam String userWeight, Model model) throws Exception {
+        System.out.println("in controller, weight: " + userWeight);
+        List<UserViewDto> userList = gymSearchService.findByUserWeight(userWeight);
+        model.addAttribute("userList",userList);
+        return "gym_search/userWeight";
+    }
+    @GetMapping("/gym/search/userWeight")
+    public String userWeighteFormView(Model model) throws Exception {
+        return "gym_search/userWeightForm";
+    }
 }
 
