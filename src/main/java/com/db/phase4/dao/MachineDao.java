@@ -2,7 +2,6 @@ package com.db.phase4.dao;
 
 import com.db.phase4.dto.MachineDto;
 import com.db.phase4.dto.MachineViewDto;
-import com.db.phase4.dto.RentalItemViewDto;
 import com.db.phase4.util.ConnectionMaker;
 
 import java.sql.*;

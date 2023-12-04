@@ -1,9 +1,6 @@
 package com.db.phase4.controller;
 
 import com.db.phase4.dto.GymViewDto;
-import com.db.phase4.dto.MachineViewDto;
-import com.db.phase4.dto.RentalItemViewDto;
-import com.db.phase4.dto.RentalViewDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.TrainerViewDto;
 import com.db.phase4.service.*;
@@ -15,13 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 public class ViewController {
     private final GymService gymService;
-    private final RentalItemService rentalItemService;
     private final MachineService machineService;
     private final TrainerService trainerService;
     private final ReviewService reviewService;

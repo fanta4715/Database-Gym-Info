@@ -26,13 +26,16 @@
                 <td th:text="${rentalViewDto.getRentalDto().getMaxQuantity()}"></td>
                 <td th:text="${rentalViewDto.getCurrentQuantity()}"></td>
                 <td>
-                    <form th:if="${rentalViewDto.isRented()}"
-                          action="/user/${userId}/gym/${gymId}/rental-item/${rentalViewDto.getRentalDto().getItemName()}/rental-return"
+                    <form th:if="${rentalViewDto.currentQuantity == 0}">
+                        <input type="submit" value="대여 불가" disabled="disabled" style="background-color: gray">
+                    </form>
+                    <form th:if="${rentalViewDto.currentQuantity > 0 && rentalViewDto.rented}"
+                          th:action="@{/user/{userId}/gym/{gymId}/rental-return/{itemName}(userId=${userId}, gymId=${gymId}, itemName=${rentalViewDto.rentalDto.itemName})}"
                           method="get">
                         <input type="submit" value="대여 반납" style="background-color: red">
                     </form>
-                    <form th:unless="${rentalViewDto.isRented()}"
-                          action="/user/${userId}/gym/${gymId}/rental-item/${rentalViewDto.getRentalDto().getItemName()}/rental-request"
+                    <form th:if="${rentalViewDto.currentQuantity > 0 && !rentalViewDto.rented}"
+                          th:action="@{/user/{userId}/gym/{gymId}/rental-request/{itemName}(userId=${userId}, gymId=${gymId}, itemName=${rentalViewDto.rentalDto.itemName})}"
                           method="get">
                         <input type="submit" value="대여 신청">
                     </form>

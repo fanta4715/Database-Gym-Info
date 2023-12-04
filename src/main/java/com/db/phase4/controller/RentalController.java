@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RentalController {
     private final RentalService rentalService;
 
-    @GetMapping("/user/{userId}/gym/{gymId}/rental-item/{itemName}/rental-request")
-    public String rentalSearch(@PathVariable int userId, @PathVariable int gymId, @PathVariable String itemName, Model model) {
-        model.addAttribute("gymId", gymId);
-        model.addAttribute("itemName", itemName);
+    @GetMapping("/user/{userId}/gym/{gymId}/rental-request/{itemName}")
+    public String rentalRequest(@PathVariable int userId, @PathVariable int gymId, @PathVariable String itemName, Model model) {
         rentalService.requestRental(userId, gymId, itemName);
-        return "/user/" + userId + "/gym/" + gymId + "/rental-item";
+        return "redirect:/user/" + userId + "/gym/" + gymId + "/rental-item";
+    }
+
+    @GetMapping("/user/{userId}/gym/{gymId}/rental-return/{itemName}")
+    public String rentalReturn(@PathVariable int userId, @PathVariable int gymId, @PathVariable String itemName, Model model) {
+        rentalService.returnRental(userId, gymId, itemName);
+        return "redirect:/user/" + userId + "/gym/" + gymId + "/rental-item";
     }
 }

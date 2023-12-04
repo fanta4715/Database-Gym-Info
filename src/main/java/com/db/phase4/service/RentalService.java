@@ -25,4 +25,8 @@ public class RentalService {
     public void requestRental(int userId, int gymId, String itemName) {
         rentalDao.requestRental(userId, gymId, itemName);
     }
+
+    public void returnRental(int userId, int gymId, String itemName) {
+        rentalDao.returnRental(userId, gymId, itemName);
+    }
 }
