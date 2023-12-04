@@ -1,7 +1,7 @@
 package com.db.phase4.service;
 
 import com.db.phase4.dao.UserDao;
-import com.db.phase4.dto.UserViewDto;
+import com.db.phase4.dto.gym.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import java.util.List;
@@ -28,4 +28,8 @@ public class UserService {
     public List<UserViewDto> findByGymId(int gymId) {
         return userDao.findByGymId(gymId);
     }
+
+    public UserViewDto findByUserId(int userId){ return userDao.findByUserId(userId);}
+
+    public UserViewDto modifyUserInfo(String[] userInfoArray){return userDao.modifyUserInfo(userInfoArray);}
 }
