@@ -25,21 +25,22 @@
   </style>
 </head>
 <body>
+<h1>MyPage</h1>
 <div class="button-container">
   <!-- 대여물품 조회 -->
-  <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/rental-item'}" class="search-button">대여물품 조회</a>
+  <a th:href="@{'/user/' + ${userId} + '/mypage/rental-item'}" class="search-button">내가 대여한 물품 조회</a>
 
   <!-- 운동기구 조회 -->
-  <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/machine'}" class="search-button">운동기구 조회</a>
+  <a th:href="@{'/user/' + ${userId} + '/mypage/machine'}" class="search-button">내가 예약/사용한 운동기구 조회</a>
 
   <!-- 트레이너 조회 -->
-  <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/trainer'}" class="search-button">트레이너 조회</a>
+  <a th:href="@{'/user/' + ${userId} + '/mypage/trainer'}" class="search-button">내 트레이너 조회</a>
 
   <!-- 리뷰 조회 -->
-  <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/review'}" class="search-button">리뷰 조회</a>
+  <a th:href="@{'/user/' + ${userId} + '/mypage/user-info'}" class="search-button">내 개인정보 조회</a>
 
-  <!-- 회원 조회 -->
-  <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/people'}" class="search-button">회원 조회</a>
+  <!-- 건강정보 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/health-info'}" class="search-button">내 건강정보 조회</a>
 </div>
 </body>
 </html>
