@@ -63,7 +63,7 @@ public class MachineDao {
         }
     }
 
-    public List<MachineDto> getWithGymId(String gymId) {
+    public List<MachineDto> getWithGymId(int gymId) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -72,7 +72,7 @@ public class MachineDao {
 
             String sql = "SELECT * FROM MACHINE M JOIN GYM G ON G.Gym_id = M.Gym_id WHERE G.Gym_id = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, gymId);
+            pstmt.setInt(1, gymId);
             rs = pstmt.executeQuery();
 
             List<MachineDto> machineDtos = MachineDto.of(rs);

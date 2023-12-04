@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class MachineService {
     private final MachineDao machineDao;
 
-    public List<MachineDto> machineSearchById(String gymId) {
+    public List<MachineDto> machineSearchById(int gymId) {
         return machineDao.getWithGymId(gymId);
     }
 

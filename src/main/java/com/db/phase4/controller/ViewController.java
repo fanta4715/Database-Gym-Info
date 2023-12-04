@@ -3,6 +3,7 @@ package com.db.phase4.controller;
 import com.db.phase4.dto.GymViewDto;
 import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.RentalItemViewDto;
+import com.db.phase4.dto.RentalViewDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.TrainerViewDto;
 import com.db.phase4.service.*;
@@ -46,15 +47,15 @@ public class ViewController {
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/rental-item")
-    public String rentalItemView(@PathVariable int userId, @PathVariable String gymId, Model model) {
+    public String rentalItemView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
-        model.addAttribute("rentals", rentalService.rentalSearchById(gymId));
+        model.addAttribute("rentals", rentalService.rentalSearchById(gymId, userId));
         return "rental-search";
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/machine")
-    public String machineView(@PathVariable int userId, @PathVariable String gymId, Model model) {
+    public String machineView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
         model.addAttribute("machines", machineService.machineSearchById(gymId));

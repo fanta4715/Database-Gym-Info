@@ -24,7 +24,7 @@ public class MachineController {
     @GetMapping("/machine-reserve")
     public String machineReserve(@RequestParam String gymId, @RequestParam String machineId, @RequestParam String userId) {
         machineService.reserveMachine(gymId, machineId, userId);
-        return "redirect:/machine-search?gymId=" + gymId + "&userId=" + userId;
+        return "/user/" + userId + "/gym/" + gymId + "/machine";
     }
 
 //         System.out.print("16. 운동기구 사용\n ");
