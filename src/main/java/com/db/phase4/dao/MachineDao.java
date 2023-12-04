@@ -16,58 +16,13 @@ import org.springframework.stereotype.Component;
 public class MachineDao {
     private final ConnectionMaker connectionMaker;
 
-    public List<MachineViewDto> findByGymId(int gymId) {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<MachineViewDto> machines = new ArrayList<>();
-        try {
-            conn = connectionMaker.createConnection();
-            stmt = conn.createStatement();
-
-//            int machineId;
-//            String name;
-//            String type;
-//            String targetMuscle;
-//            String state;
-
-            StringBuffer sb = new StringBuffer();
-            sb.append("SELECT machine_id, name, type, target_muscle, state  ");
-            sb.append("FROM machine ");
-            sb.append("WHERE gym_id =" + gymId);
-
-            rs = stmt.executeQuery(sb.toString());
-
-            while (rs.next()) {
-                int machineId = rs.getInt(1);
-                String name = rs.getString(2);
-                String type = rs.getString(3);
-                String targetMuscle = rs.getString(4);
-                String state = rs.getString(5);
-
-                machines.add(MachineViewDto.builder()
-                        .machineId(machineId)
-                        .name(name)
-                        .type(type).
-                        targetMuscle(targetMuscle).
-                        state(state).
-                        build()
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionMaker.closeAll(conn, stmt, rs);
-            return machines;
-        }
-    }
-
-    public List<MachineDto> getWithGymId(int gymId) {
+    public List<MachineViewDto> getWithGymId(int gymId, int userId) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = connectionMaker.createConnection();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
             String sql = "SELECT * FROM MACHINE M JOIN GYM G ON G.Gym_id = M.Gym_id WHERE G.Gym_id = ?";
             pstmt = conn.prepareStatement(sql);
@@ -75,10 +30,51 @@ public class MachineDao {
             rs = pstmt.executeQuery();
 
             List<MachineDto> machineDtos = MachineDto.of(rs);
+            List<MachineViewDto> machineViewDtos = new ArrayList<>();
+            for (MachineDto machineDto : machineDtos) {
+                // 해당 기구를 사용하는 User가 있는지 확인 + 있다면 그 사람이 본인인지 확인
+                PreparedStatement tempPstmt1 = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE USING_MACHINE_ID = ?");
+                tempPstmt1.setInt(1, machineDto.getMachineId());
+                ResultSet tempRs1 = tempPstmt1.executeQuery();
+                tempRs1.next();
+                boolean isUsing = tempRs1.getInt(1) > 0;
+
+                PreparedStatement tempPstmt2 = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE USING_MACHINE_ID = ? AND USER_ID = ?");
+                tempPstmt2.setInt(1, machineDto.getMachineId());
+                tempPstmt2.setInt(2, userId);
+                ResultSet tempRs2 = tempPstmt2.executeQuery();
+                tempRs2.next();
+                boolean isDoing = tempRs2.getInt(1) > 0;
+
+                // 해당 기구를 예약하는 User가 있는지 확인 + 있다면 그 사람이 본인인지 확인
+                PreparedStatement tempPstmt3 = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE RESERVE_MACHINE_ID = ?");
+                tempPstmt3.setInt(1, machineDto.getMachineId());
+                ResultSet tempRs3 = tempPstmt3.executeQuery();
+                tempRs3.next();
+                boolean isReserved = tempRs3.getInt(1) > 0;
+
+                PreparedStatement tempPstmt4 = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE RESERVE_MACHINE_ID = ? AND USER_ID = ?");
+                tempPstmt4.setInt(1, machineDto.getMachineId());
+                tempPstmt4.setInt(2, userId);
+                ResultSet tempRs4 = tempPstmt4.executeQuery();
+                tempRs4.next();
+                boolean isReserving = tempRs4.getInt(1) > 0;
+
+                machineViewDtos.add(new MachineViewDto(machineDto, isUsing, isDoing, isReserved, isReserving));
+
+                tempPstmt1.close();
+                tempPstmt2.close();
+                tempPstmt3.close();
+                tempPstmt4.close();
+                tempRs1.close();
+                tempRs2.close();
+                tempRs3.close();
+                tempRs4.close();
+            }
 
             conn.commit();
 
-            return machineDtos;
+            return machineViewDtos;
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -139,5 +135,22 @@ public class MachineDao {
     }
 
     public void reserveMachine(String gymId, String machineId, String userId) {
+//            System.out.print("15. 운동기구 예약\n ");
+//            sb.append("UPDATE USERS");
+//		sb.append(" SET RESERVE_MACHINE_ID=" + machineId);
+//		sb.append(" WHERE USER_ID=" + userId);
+
+        //        sb.append("UPDATE MACHINE");
+//		sb.append(" SET STATE='non_reservable'");
+//		sb.append(" WHERE MACHINE_ID=" + machineId);
+
+//         System.out.print("16. 운동기구 사용\n ");
+//         sb.append("UPDATE USERS");
+//		sb.append(" SET USING_MACHINE_ID=" + machineId);
+//		sb.append(" WHERE USER_ID=" + userId);
+
+        //        sb.append("UPDATE MACHINE");
+//		sb.append(" SET STATE='" + newState + "'");
+//		sb.append(" WHERE MACHINE_ID=" + machineId);
     }
 }

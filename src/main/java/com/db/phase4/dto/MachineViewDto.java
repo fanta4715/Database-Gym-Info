@@ -7,12 +7,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
 public class MachineViewDto {
-    int machineId;
-    String name;
-    String type;
-    String targetMuscle;
-    String state;
+    private MachineDto machineDto;
+    private boolean isUsing; // true 누군가 기구를 사용 중인 상태.
+    private boolean isDoing; // true 본인이 사용 중인 상태.
+    private boolean isReserved; // true 누군가 기구를 예약한 상태.
+    private boolean isReserving; // true 본인이 예약한 상태.
+
+    public MachineViewDto(MachineDto machineDto, boolean isUsing, boolean isDoing, boolean isReserved, boolean isReserving) {
+        this.machineDto = machineDto;
+        this.isUsing = isUsing;
+        this.isDoing = isDoing;
+        this.isReserved = isReserved;
+        this.isReserving = isReserving;
+    }
 }

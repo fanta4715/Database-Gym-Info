@@ -17,34 +17,52 @@
                 <th>Machine Type</th>
                 <th>Target Muscle</th>
                 <th>State</th>
+
+                <th>Using</th>
+                <th>Doing</th>
+                <th>Reserved</th>
+                <th>Reserving</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="machine : ${machines}">
-                <td th:text="${machine.machineId}"></td>
-                <td th:text="${machine.name}"></td>
-                <td th:text="${machine.type}"></td>
-                <td th:text="${machine.targetMuscle}"></td>
-                <td th:text="${machine.state}"></td>
+<!--            GET VALUES WITH MachineViewDto
+    private MachineDto machineDto;
+    private boolean isUsing; // true 누군가 기구를 사용 중인 상태.
+    private boolean isDoing; // true 본인이 사용 중인 상태.
+    private boolean isReserved; // true 누군가 기구를 예약한 상태.
+    private boolean isReserving; // true 본인이 예약한 상태.
+
+    반드시 .getMachineDto()과 같이 접근해야함.
+    -->
+            <tr th:each="machineViewDto : ${machines}">
+                <td th:text="${machineViewDto.getMachineDto().getMachineId()}"></td>
+                <td th:text="${machineViewDto.getMachineDto().getName()}"></td>
+                <td th:text="${machineViewDto.getMachineDto().getType()}"></td>
+                <td th:text="${machineViewDto.getMachineDto().getTargetMuscle()}"></td>
+                <td th:text="${machineViewDto.getMachineDto().getState()}"></td>
+
+                <td th:text="${machineViewDto.isUsing()}"></td>
+                <td th:text="${machineViewDto.isDoing()}"></td>
+                <td th:text="${machineViewDto.isReserved()}"></td>
+                <td th:text="${machineViewDto.isReserving()}"></td>
+<!--                + 기구 예약
+1. 이용자는 본인 기구 취소 버튼 생성
+2. 예약자는 이용 가능할 때, 이용하기 버튼 생성
+
+사용자 : 사용하기/완료하기
+예약자 : 예약하기/(사용하기->이용자/예약 취소하기)
+
+url : /user/{userId}/gym/{gymId}/machine/{machineId}/reservation
+-->
                 <td>
-                    <form th:if="${machine.state == 'usable'}" action="/machine-request" method="get">
-                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
-                        <input type="hidden" name="gymId" th:value="${gymId}">
-                        <input type="hidden" name="userId" th:value="${userId}">
-                        <input type="submit" value="사용하기">
-                    </form>
-                    <form th:if="${machine.state == 'reservable'}" action="/machine-reserve" method="get">
-                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
-                        <input type="hidden" name="gymId" th:value="${gymId}">
-                        <input type="hidden" name="userId" th:value="${userId}">
-                        <input type="submit" value="예약하기" style="background-color: #00bfff;">
-                    </form>
-                    <form th:if="${machine.state == 'unusable'}" action="/machine-request" method="get">
-                        <input type="hidden" name="machineId" th:value="${machine.machineId}">
-                        <input type="hidden" name="gymId" th:value="${gymId}">
-                        <input type="submit" value="이용불가" disabled="disabled"
-                               style="background-color: red; cursor: not-allowed;">
+                    <form th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/reservation(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.getMachineDto().getMachineId()})}"
+                          method="post">
+                        <input type="submit" value="예약하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == false and machineViewDto.isReserving() == false}"/>
+                        <input type="submit" value="사용하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == false and machineViewDto.isReserving() == true}"/>
+                        <input type="submit" value="완료하기" th:if="${machineViewDto.isUsing() == true and machineViewDto.isDoing() == true}"/>
+                        <input type="submit" value="예약 취소하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == false}"/>
+                        <input type="submit" value="이용 취소하기" th:if="${machineViewDto.isUsing() == true and machineViewDto.isDoing() == false}"/>
                     </form>
                 </td>
             </tr>

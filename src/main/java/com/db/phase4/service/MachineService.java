@@ -19,19 +19,11 @@ import org.springframework.stereotype.Service;
 public class MachineService {
     private final MachineDao machineDao;
 
-    public List<MachineDto> machineSearchById(int gymId) {
-        return machineDao.getWithGymId(gymId);
-    }
-
-    public void requestMachine(String gymId, String machineId, String userId) {
-        machineDao.requestMachine(gymId, machineId, userId);
+    public List<MachineViewDto> machineSearchById(int gymId, int userId) {
+        return machineDao.getWithGymId(gymId, userId);
     }
 
     public void reserveMachine(String gymId, String machineId, String userId) {
         machineDao.reserveMachine(gymId, machineId, userId);
-    }
-
-    public List<MachineViewDto> findByGymId(int gymId) {
-        return machineDao.findByGymId(gymId);
     }
 }
