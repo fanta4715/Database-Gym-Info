@@ -27,6 +27,17 @@
 <body>
 <h1>MyPage</h1>
 <div class="button-container">
+
+  <div class="search-container">
+    <form action="/searched-user" method="get">
+      <label>
+        <span>유저 찾기</span>
+        <input type="text" placeholder="User id" name="userId">
+      </label>
+
+      <input type="submit" value="전송">
+    </form>
+  </div>
   <!-- 대여물품 조회 -->
   <a th:href="@{'/user/' + ${userId} + '/mypage/rental-item'}" class="search-button">내가 대여한 물품 조회</a>
 
