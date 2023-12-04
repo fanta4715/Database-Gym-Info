@@ -23,7 +23,15 @@ public class MachineService {
         return machineDao.getWithGymId(gymId, userId);
     }
 
-    public void reserveMachine(String gymId, String machineId, String userId) {
-        machineDao.reserveMachine(gymId, machineId, userId);
+    public void reserveMachine(int gymId, int machineId, int userId, String reservation) {
+        machineDao.reserveMachine(gymId, machineId, userId, reservation);
+    }
+
+    public boolean canUse(int gymId, int userId) {
+        return machineDao.canUse(gymId, userId);
+    }
+
+    public boolean canReserve(int gymId, int userId) {
+        return machineDao.canReserve(gymId, userId);
     }
 }

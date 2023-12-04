@@ -54,6 +54,8 @@ public class ViewController {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
         model.addAttribute("machines", machineService.machineSearchById(gymId, userId));
+        model.addAttribute("canUse", machineService.canUse(gymId, userId));
+        model.addAttribute("canReserve", machineService.canReserve(gymId, userId));
         return "machine-search";
     }
 

@@ -13,12 +13,16 @@ public class MachineViewDto {
     private boolean isDoing; // true 본인이 사용 중인 상태.
     private boolean isReserved; // true 누군가 기구를 예약한 상태.
     private boolean isReserving; // true 본인이 예약한 상태.
+    private boolean canUse; // true 사용 가능한 상태.
+    private boolean canReserve; // true 예약 가능한 상태.
 
-    public MachineViewDto(MachineDto machineDto, boolean isUsing, boolean isDoing, boolean isReserved, boolean isReserving) {
+    public MachineViewDto(MachineDto machineDto, boolean isUsing, boolean isDoing, boolean isReserved, boolean isReserving, boolean canUse, boolean canReserve) {
         this.machineDto = machineDto;
         this.isUsing = isUsing;
         this.isDoing = isDoing;
         this.isReserved = isReserved;
         this.isReserving = isReserving;
+        this.canUse = canUse;
+        this.canReserve = canReserve;
     }
 }

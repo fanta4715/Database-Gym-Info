@@ -16,53 +16,54 @@
                 <th>Machine Name</th>
                 <th>Machine Type</th>
                 <th>Target Muscle</th>
-                <th>State</th>
-
-                <th>Using</th>
-                <th>Doing</th>
-                <th>Reserved</th>
-                <th>Reserving</th>
-                <th></th>
+                <th>Request Buttons</th>
             </tr>
             </thead>
             <tbody>
-<!--            GET VALUES WITH MachineViewDto
-    private MachineDto machineDto;
-    private boolean isUsing; // true 누군가 기구를 사용 중인 상태.
-    private boolean isDoing; // true 본인이 사용 중인 상태.
-    private boolean isReserved; // true 누군가 기구를 예약한 상태.
-    private boolean isReserving; // true 본인이 예약한 상태.
-
-    반드시 .getMachineDto()과 같이 접근해야함.
-    -->
             <tr th:each="machineViewDto : ${machines}">
                 <td th:text="${machineViewDto.getMachineDto().getMachineId()}"></td>
                 <td th:text="${machineViewDto.getMachineDto().getName()}"></td>
                 <td th:text="${machineViewDto.getMachineDto().getType()}"></td>
                 <td th:text="${machineViewDto.getMachineDto().getTargetMuscle()}"></td>
-                <td th:text="${machineViewDto.getMachineDto().getState()}"></td>
-
-                <td th:text="${machineViewDto.isUsing()}"></td>
-                <td th:text="${machineViewDto.isDoing()}"></td>
-                <td th:text="${machineViewDto.isReserved()}"></td>
-                <td th:text="${machineViewDto.isReserving()}"></td>
-<!--                + 기구 예약
-1. 이용자는 본인 기구 취소 버튼 생성
-2. 예약자는 이용 가능할 때, 이용하기 버튼 생성
-
-사용자 : 사용하기/완료하기
-예약자 : 예약하기/(사용하기->이용자/예약 취소하기)
-
-url : /user/{userId}/gym/{gymId}/machine/{machineId}/reservation
--->
                 <td>
-                    <form th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/reservation(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.getMachineDto().getMachineId()})}"
-                          method="post">
-                        <input type="submit" value="예약하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == false and machineViewDto.isReserving() == false}"/>
-                        <input type="submit" value="사용하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == false and machineViewDto.isReserving() == true}"/>
-                        <input type="submit" value="완료하기" th:if="${machineViewDto.isUsing() == true and machineViewDto.isDoing() == true}"/>
-                        <input type="submit" value="예약 취소하기" th:if="${machineViewDto.isUsing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == false}"/>
-                        <input type="submit" value="이용 취소하기" th:if="${machineViewDto.isUsing() == true and machineViewDto.isDoing() == false}"/>
+                    <!-- 예약하기 -->
+                    <form th:if="${machineViewDto.isDoing() == false  and machineViewDto.isReserved() == false and machineViewDto.isReserving() == false and canReserve == true}"
+                          th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/reservation-reserve(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.machineDto.machineId})}"
+                          method="get">
+                        <input type="submit" value="Reservation-Register" style="background-color: green"/>
+                    </form>
+
+                    <!-- 예약 후 사용 -->
+                    <form th:if="${machineViewDto.isUsing() == false and machineViewDto.isDoing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == true and canUse == true and canReserve == false}"
+                          th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/reservation-use(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.machineDto.machineId})}"
+                          method="get">
+                        <input type="submit" value="Reservation-Use" style="background-color: green"/>
+                    </form>
+
+                    <!-- 예약 취소 -->
+                    <form th:if="${machineViewDto.isDoing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == true and canReserve == false}"
+                          th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/reservation-cancel(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.machineDto.machineId})}"
+                          method="get">
+                        <input type="submit" value="Reservation-Cancel" style="background-color: darkblue;"/>
+                    </form>
+
+                    <!-- 사용하기 -->
+                    <form th:if="${canUse == true and machineViewDto.isUsing() == false and machineViewDto.isDoing() == false and machineViewDto.isReserving() == false and canUse == true}"
+                          th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/use(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.machineDto.machineId})}"
+                          method="get">
+                        <input type="submit" value="Use-Machine"/>
+                    </form>
+
+                    <!-- 사용 완료 -->
+                    <form th:if="${canUse == false and machineViewDto.isUsing() == true and machineViewDto.isDoing() == true and machineViewDto.isReserving() == false}"
+                          th:action="@{/user/{userId}/gym/{gymId}/machine/{machineId}/done(userId=${userId}, gymId=${gymId}, machineId=${machineViewDto.machineDto.machineId})}"
+                          method="get">
+                        <input type="submit" value="Done-Machine"/>
+                    </form>
+
+                    <!-- 이용 불가 -->
+                    <form th:if="${(machineViewDto.isUsing() == true and machineViewDto.isReserved() == true and machineViewDto.isDoing() == false and machineViewDto.isReserving() == false) or (canUse == false and canReserve == false and not (machineViewDto.isDoing() == true or machineViewDto.isReserving() == true))}">
+                        <input type="submit" value="Unavailable" style="background-color: red" disabled="disabled"/>
                     </form>
                 </td>
             </tr>
