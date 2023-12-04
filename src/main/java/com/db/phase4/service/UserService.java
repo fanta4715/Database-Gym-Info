@@ -1,6 +1,7 @@
 package com.db.phase4.service;
 
 import com.db.phase4.dao.UserDao;
+import com.db.phase4.dto.HealthInfoDto;
 import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
@@ -32,5 +33,9 @@ public class UserService {
 
     public UserViewDto findById(int userId) {
         return userDao.findById(userId);
+    }
+
+    public List<HealthInfoDto> findHealthInfoById(int userId) {
+        return userDao.findHealthInfoById(userId);
     }
 }

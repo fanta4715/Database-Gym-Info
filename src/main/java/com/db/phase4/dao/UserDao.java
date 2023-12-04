@@ -1,5 +1,6 @@
 package com.db.phase4.dao;
 
+import com.db.phase4.dto.HealthInfoDto;
 import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
@@ -193,6 +194,49 @@ public class UserDao {
             return person;
         }
 
+
+    }
+
+    public List<HealthInfoDto> findHealthInfoById(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<HealthInfoDto> healthInfos = new ArrayList<>();
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT measure_date, weight, height, body_fat_percentage, muscle_mass ");
+            sb.append("FROM HEALTH_INFO ");
+            sb.append("WHERE user_id = " + userId);
+            String sql = sb.toString();
+
+            rs = stmt.executeQuery(sb.toString());
+            while(rs.next()){
+                LocalDate measureDate = rs.getDate(1).toLocalDate();
+                float weight = rs.getFloat(2);
+                float height = rs.getFloat(3);
+                float bodyFatPercentage = rs.getFloat(4);
+                float muscleMass = rs.getFloat(5);
+
+                healthInfos.add(HealthInfoDto.builder()
+                        .measureDate(measureDate)
+                        .weight(weight)
+                        .height(height)
+                        .bodyFatPercentage(bodyFatPercentage)
+                        .muscleMass(muscleMass)
+                        .build());
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return healthInfos;
+        }
 
     }
 }
