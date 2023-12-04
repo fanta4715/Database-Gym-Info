@@ -1,6 +1,7 @@
 package com.db.phase4.controller;
 
 import com.db.phase4.dao.UserDao;
+import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.gym.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,7 +33,11 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/machine")
     public String myMachineView(@PathVariable int userId, Model model) {
+        List<MachineViewDto> machineViewDtoList = userService.myMachineInfo(userId);
+        System.out.println(userId);
+        model.addAttribute("machineList", machineViewDtoList);
         return "mypage/mypage-machine";
+
     }
 
     @GetMapping("/user/{userId}/mypage/trainer")

@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Trainer of Gyms Search Results</title>
 </head>
 <body>
-    machine
+
+<div id="gym-search-container">
+    <h1>나의 운동기구 사용/예약 현황</h1>
+
+    <table>
+        <thead>
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf's each directive to iterate over the trainerList -->
+        <tr th:each="machine : ${machineList}">
+            <td th:text="${machine.machineId}"></td>
+            <td th:text="${machine.name}"></td>
+            <td th:text="${machine.type}"></td>
+            <td th:text="${machine.targetMuscle}"></td>
+            <td th:text="${machine.state}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
 </body>
 </html>
