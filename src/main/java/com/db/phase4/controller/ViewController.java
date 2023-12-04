@@ -3,6 +3,7 @@ package com.db.phase4.controller;
 import com.db.phase4.dto.GymViewDto;
 import com.db.phase4.dto.MachineViewDto;
 import com.db.phase4.dto.RentalItemViewDto;
+import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
@@ -113,5 +114,12 @@ public class ViewController {
         List<ReviewCountDto> reviewers = reviewService.findByGenderAndAge(gender, lowerBirthday, upperBirthday);
         model.addAttribute("reviewers", reviewers);
         return "review-list";
+    }
+
+    @GetMapping("/user/{userId}/gym/{gymId}/people")
+    public String peopleView(@PathVariable int userId, @PathVariable int gymId, Model model) {
+        List<UserViewDto> people = userService.findByGymId(gymId);
+        model.addAttribute("people", people);
+        return "people";
     }
 }
