@@ -7,10 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ReviewUpdateReq {
+public class ReviewDeleteReq {
     private int reviewId;
     private int userId;
     private int gymId;
-    private String comment;
-    private int rating;
 }

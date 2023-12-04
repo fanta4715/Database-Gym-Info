@@ -69,8 +69,9 @@
 <body>
 <div class="header">
   <div class="search-container">
-<!--    <input type="text" id="searchInput" placeholder="Search Reviews">-->
-    <button onclick="searchReviews()">Setting Filter</button>
+    <a href="/review-search">
+      <button>review search</button>
+    </a>
   </div>
 <!--  <button class="add-review-button" id="addReviewButton" onclick="addReview()">Add Review</button>-->
   <a th:href="@{/user/{userId}/gym/{gymId}/review-save(userId=${userId}, gymId=${gymId})}">
@@ -84,12 +85,14 @@
     <span class="rating" th:utext="${'★'.repeat(review.rating)}"></span>
     <p th:text="${review.comment}"></p>
     <div class="review-date" th:text="${'Posted on: ' + review.date}"></div>
-    <form th:action="@{/update}" method="post">
-      <input type="hidden" th:value="${review.reviewId}" name="reviewId"/>
-      <button type="submit">Update</button>
-    </form>
-    <form th:action="@{{gymId}/review-update/{reviewId}(gymId=${gymId}, reviewId=${review.reviewId})}" method="post">
+    <a th:href="@{/user/{userId}/gym/{gymId}/review/{reviewId}/review-update(userId=${userId}, gymId=${gymId}, reviewId=${review.reviewId})}">
+      <button type="button">Update</button>
+    </a>
+    <form th:action="@{/review-delete}" method="post">
       <input type="hidden" name="_method" value="delete" />
+      <input type="hidden" id="reviewId" name="reviewId" th:value="${review.reviewId}">
+      <input type="hidden" id="userId" name="userId" th:value="${userId}">
+      <input type="hidden" id="gymId" name="gymId" th:value="${gymId}">
       <button type="submit">Delete</button>
     </form>
   </div>
@@ -111,17 +114,6 @@
       });
     }
 
-    function addReview() {
-      var gymId = document.getElementById("gymId").value;
-
-      document.getElementById("addReviewButton").addEventListener("click", function() {
-        // gymId를 사용하여 URL을 동적으로 생성
-        var url = '/' + gymId + '/review-save';
-
-        // 생성된 URL을 사용하여 리디렉션
-        window.location.href = url;
-      });
-    }
   </script>
 </body>
 </html>

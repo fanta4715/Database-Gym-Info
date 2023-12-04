@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TrainerRegisterDto {
     int userId;
+    int gymId;
     int trainerId;
 }
