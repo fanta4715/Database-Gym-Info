@@ -161,5 +161,38 @@ public class UserDao {
         }
     }
 
+    public UserViewDto findById(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        UserViewDto person = null;
 
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT U.Name, U.Birth_date, U.SEX FROM USERS U WHERE U.User_id = " + userId);
+            String sql = sb.toString();
+
+            rs = stmt.executeQuery(sb.toString());
+            rs.next();
+            String name = rs.getString(1);
+            LocalDate birthDate = rs.getDate(2).toLocalDate();
+            String sex = rs.getString(3);
+            person = UserViewDto.builder()
+                        .name(name)
+                        .birthdate(birthDate)
+                        .sex(sex)
+                        .build();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return person;
+        }
+
+
+    }
 }

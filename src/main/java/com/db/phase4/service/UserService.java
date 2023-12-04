@@ -28,4 +28,9 @@ public class UserService {
     public List<UserViewDto> findByGymId(int gymId) {
         return userDao.findByGymId(gymId);
     }
+
+
+    public UserViewDto findById(int userId) {
+        return userDao.findById(userId);
+    }
 }
