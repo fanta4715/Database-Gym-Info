@@ -3,72 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/style.css}">
   <title>Gym Search Results By Number of Machine</title>
-  <style>
-    body {
-      background-color: #ecf0f5;
-      font-family: Arial, sans-serif;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    #gym-search-container {
-      max-width: 800px;
-      width: 100%;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      overflow: hidden; /* Hide overflow content */
-    }
-
-    h1 {
-      color: #3498db;
-      margin-bottom: 20px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      max-height: 300px; /* Set a maximum height for the ul */
-      overflow-y: auto; /* Enable vertical scrollbar if needed */
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-
-    span {
-      display: inline-block;
-      padding: 8px;
-      border-radius: 5px;
-      margin-right: 10px;
-      width: 100px;
-    }
-  </style>
 </head>
 <body>
 
-<div id="gym-search-container">
+<div id="container">
   <h1>Gym Search Results By Number Of Machine</h1>
-
-  <span>GYM NAME</span>
-  <span>NUMBER OF MACHINE</span>
-  <!-- gymList를 반복하여 각 체육관 정보를 표시 -->
-  <ul>
+  <table>
+    <thead>
+    <tr>
+      <th>GYM ID</th>
+      <th>GYM NAME</th>
+      <th>NUMBER OF MACHINE</th>
+    </tr>
+    </thead>
+    <tbody>
     <!-- Thymeleaf의 each 디렉티브를 사용하여 반복 -->
-    <li th:each="gym : ${gymList}">
-      <span style="width: 100px;" th:text="${gym.gymId}"></span>
-      <span th:text="${gym.gymName}"></span>
-      <span th:text="${gym.numOfMachine}"></span>
-    </li>
-  </ul>
+    <tr th:each="gym : ${gymList}">
+      <td th:text="${gym.gymId}"></td>
+      <td th:text="${gym.gymName}"></td>
+      <td th:text="${gym.numOfMachine}"></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 </body>

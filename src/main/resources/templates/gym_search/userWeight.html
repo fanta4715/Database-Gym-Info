@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" th:href="@{/style.css}">
-  <title>Gym Search Results By Number of User</title>
+  <title>Trainer of Gyms Search Results</title>
 </head>
-
 <body>
 
 <div id="gym-search-container">
-  <h1>Gym Search Results By Gym and User Name</h1>
+  <h1>Gym Search Results By User's Weight</h1>
 
   <table>
     <thead>
     <tr>
+      <th>USER NAME</th>
       <th>GYM NAME</th>
-      <th>GYM USERNAME</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Thymeleaf의 each 디렉티브를 사용하여 반복 -->
-    <tr th:each="gym : ${gymList}">
-      <td th:text="${gym.gymName}"></td>
-      <td th:text="${gym.someUserName}"></td>
+    <!-- Thymeleaf's each directive to iterate over the trainerList -->
+    <tr th:each="user : ${userList}">
+      <td th:text="${user.userName}"></td>
+      <td th:text="${user.gymName}"></td>
     </tr>
     </tbody>
   </table>
@@ -32,5 +30,4 @@
 
 
 </body>
-
 </html>

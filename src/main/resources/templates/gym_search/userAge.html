@@ -4,27 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" th:href="@{/style.css}">
-  <title>Gym Search Results</title>
+  <title>Trainer of Gyms Search Results</title>
 </head>
 <body>
 
 <div id="gym-search-container">
-  <h1>Gym Search Results</h1>
+  <h1>Gym Search Results By User's Gender And Age</h1>
 
   <table>
     <thead>
     <tr>
-      <th style="width: 100px;">GYM NAME</th>
-      <th>LOCATION</th>
-      <th>CONTACT</th>
+      <th>NUM OF USER</th>
+      <th>GYM NAME</th>
+      <th>GYM ID</th>
+      <th>GENDER</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Thymeleaf의 each 디렉티브를 사용하여 반복 -->
+    <!-- Thymeleaf's each directive to iterate over the trainerList -->
     <tr th:each="gym : ${gymList}">
+      <td th:text="${gym.userNumber}"></td>
       <td th:text="${gym.gymName}"></td>
-      <td th:text="${gym.location}"></td>
-      <td th:text="${gym.contact}"></td>
+      <td th:text="${gym.gymId}"></td>
+      <td th:text="${gym.gender}"></td>
     </tr>
     </tbody>
   </table>

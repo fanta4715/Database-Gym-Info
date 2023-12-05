@@ -2,6 +2,7 @@ package com.db.phase4.dao;
 
 import com.db.phase4.dto.HealthInfoDto;
 import com.db.phase4.dto.UserViewDto;
+import com.db.phase4.dto.gym.UserDetailViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import com.db.phase4.util.ConnectionMaker;
@@ -297,5 +298,126 @@ public class UserDao {
             return hasTrainer;
         }
 
+    }
+
+    //-------------추가 사항------------//
+    // 유저 개인 정보 조회
+    public UserDetailViewDto findByUserId(int id) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        UserDetailViewDto userDetailViewDto = null;
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT * ");
+            sb.append("FROM USERS ");
+            sb.append("WHERE USERS.User_id = "+ id);
+            rs = stmt.executeQuery(sb.toString());
+            while (rs.next()){
+                int userId = rs.getInt(1);
+                int usingMachineId = rs.getInt(2);
+                int reserveMachineId = rs.getInt(3);
+                int trainerId = rs.getInt(4);
+                String userName = rs.getString(5);
+                String birthDate = rs.getString(6);
+                String sex = rs.getString(7);
+                String contact = rs.getString(8);
+
+                userDetailViewDto =  new UserDetailViewDto(userId, userName, usingMachineId, reserveMachineId, trainerId, birthDate, sex, contact, 0, "");
+            }
+            if(userDetailViewDto == null){
+                System.out.println("userViewDto is null");
+            }else{
+                System.out.println("userViewDto: " + userDetailViewDto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return userDetailViewDto;
+        }
+    }
+
+    // 유저 개인 정보 수정
+    public UserDetailViewDto modifyUserInfo(String[] userInfoArray) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        UserDetailViewDto userDetailViewDto = null;
+//        String[] userInfoArray = {userId, userName, birthDate, contact};
+
+        System.out.println("A");
+
+        String Id = userInfoArray[0];
+        String Name = userInfoArray[1];
+        String Date = userInfoArray[2];
+        String[] parts = Date.split("\\s+");
+        // 분할된 문자열 중 첫 번째 부분을 선택
+        Date = parts[0];
+        String Phone = userInfoArray[3];
+        System.out.println(userInfoArray);
+        System.out.println("B");
+        System.out.println(Id);
+        System.out.println(Name);
+        System.out.println(Date);
+        System.out.println(Phone);
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("UPDATE USERS ");
+            sb.append("SET Name = '" + Name + "', ");
+            sb.append("Birth_date = TO_DATE('" + Date + "', 'YYYY-MM-DD'), ");
+            sb.append("Phone_number = '" + Phone + "' ");
+            sb.append("WHERE User_id  = " + Integer.parseInt(Id));
+            System.out.println("C");
+
+            rs = stmt.executeQuery(sb.toString());
+
+            sb = new StringBuffer();
+            sb.append("SELECT *");
+            sb.append("FROM USERS ");
+            sb.append("WHERE User_id = " + Integer.parseInt(Id));
+            rs = stmt.executeQuery(sb.toString());
+
+            System.out.println("D");
+
+            while (rs.next()){
+                int userId = rs.getInt(1);
+                int usingMachineId = rs.getInt(2);
+                int reserveMachineId = rs.getInt(3);
+                int trainerId = rs.getInt(4);
+                String userName = rs.getString(5);
+                String birthDate = rs.getString(6);
+                String sex = rs.getString(7);
+                String contact = rs.getString(8);
+                System.out.println("E");
+
+                userDetailViewDto =  new UserDetailViewDto(userId, userName, usingMachineId, reserveMachineId, trainerId, birthDate, sex, contact, 0, "");
+            }
+            System.out.println("F");
+
+            if(userDetailViewDto == null){
+                System.out.println("userViewDto is null");
+            }else{
+                System.out.println("userViewDto: " + userDetailViewDto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("G");
+
+            connectionMaker.closeAll(conn, stmt, rs);
+            return userDetailViewDto;
+        }
     }
 }
