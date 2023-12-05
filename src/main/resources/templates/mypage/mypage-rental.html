@@ -1,10 +1,28 @@
+<!--thymeleaf html-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--    css int static/style.css-->
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    rental
+<h1>대여 목록</h1>
+<!--userId-->
+<p th:text="'User Id : ' + ${userId}"></p>
+<table>
+    <tr>
+        <th>대여 체육관</th>
+        <th>대여 물품명</th>
+    </tr>
+    <tr th:each="rentalItem : ${rentalItems}">
+        <td th:text="${rentalItem.getGymId()}"></td>
+        <td th:text="${rentalItem.getItemName()}"></td>
+    </tr>
+</table>
 </body>
 </html>
+
+
+

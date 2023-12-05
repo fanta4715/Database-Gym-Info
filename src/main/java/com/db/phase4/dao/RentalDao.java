@@ -129,4 +129,37 @@ public class RentalDao {
             connectionMaker.closeAllWthPstmt(conn, pstmt, rs);
         }
     }
+
+    public List<RentalDto> findRentalItemById(int userId) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = connectionMaker.createConnection();
+
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+            // 해당 사용자가 대여한 물품의 헬스장 id, 물품 이름 조회
+            pstmt = conn.prepareStatement("SELECT Gym_id, Item_name FROM RENTS WHERE User_id = ?");
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+
+            List<RentalDto> rentalDtos = RentalDto.setGymIdAndItemNameWithResultSet(rs);
+
+            conn.commit();
+
+            return rentalDtos;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connectionMaker.closeAllWthPstmt(conn, pstmt, rs);
+        }
+        return new ArrayList<>();
+    }
 }

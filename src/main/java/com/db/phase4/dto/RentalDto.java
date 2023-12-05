@@ -28,4 +28,15 @@ public class RentalDto {
         }
         return rentalDtoList;
     }
+
+    public static List<RentalDto> setGymIdAndItemNameWithResultSet(ResultSet rs) throws SQLException {
+        List<RentalDto> rentalDtoList = new ArrayList<>();
+        while (rs.next()) {
+            RentalDto rentalDto = new RentalDto();
+            rentalDto.setItemName(rs.getString("ITEM_NAME"));
+            rentalDto.setGymId(rs.getString("GYM_ID"));
+            rentalDtoList.add(rentalDto);
+        }
+        return rentalDtoList;
+    }
 }
