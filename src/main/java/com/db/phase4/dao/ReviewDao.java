@@ -34,10 +34,20 @@ public class ReviewDao {
             stmt = conn.createStatement();
             String sql = "DELETE FROM review WHERE review_id ="+reviewId;
             stmt.executeUpdate(sql);
+
+            conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
+
         }
 
     }
@@ -83,6 +93,7 @@ public class ReviewDao {
         log.info("save!!");
         try {
             conn = connectionMaker.createConnection();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             stmt = conn.createStatement();
 
             LocalDate currentDate = LocalDate.now();
@@ -99,8 +110,15 @@ public class ReviewDao {
                             + ", " + reviewReq.getGymId() + ")");
 
             stmt.executeUpdate(sb.toString());
-
+            conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
@@ -130,8 +148,15 @@ public class ReviewDao {
             sb.append(" WHERE Review_id = " + reviewReq.getReviewId());
 
             stmt.executeUpdate(sb.toString());
-
+            conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
