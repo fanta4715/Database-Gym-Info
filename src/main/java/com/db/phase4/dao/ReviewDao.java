@@ -132,6 +132,7 @@ public class ReviewDao {
 
         try {
             conn = connectionMaker.createConnection();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             stmt = conn.createStatement();
 
             StringBuffer sb = new StringBuffer();

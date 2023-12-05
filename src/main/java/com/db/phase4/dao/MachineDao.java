@@ -282,6 +282,7 @@ public class MachineDao {
         List<MachineDetailViewDto> machineList = new ArrayList<>();
         try {
             conn = connectionMaker.createConnection();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             stmt = conn.createStatement();
 
 //            int machineId;

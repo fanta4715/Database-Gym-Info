@@ -369,6 +369,8 @@ public class UserDao {
         System.out.println(Phone);
         try {
             conn = connectionMaker.createConnection();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
             stmt = conn.createStatement();
 
             StringBuffer sb = new StringBuffer();
@@ -409,13 +411,18 @@ public class UserDao {
             }else{
                 System.out.println("userViewDto: " + userDetailViewDto);
             }
-
-
+            conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             System.out.println("G");
-
             connectionMaker.closeAll(conn, stmt, rs);
             return userDetailViewDto;
         }
