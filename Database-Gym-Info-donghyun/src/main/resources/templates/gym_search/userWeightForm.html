@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trainer Specialization</title>
+  <link rel="stylesheet" th:href="@{/form.css}">
+</head>
+<body>
+
+<form action="http://localhost:8080/gym/search/userWeight" method="post">
+  <h1>By User Weight</h1>
+  <label>특정 몸무게 이상인 유저 및 등록된 체육관 조회
+    <input type="text" name="userWeight">
+  </label>
+  <input type="submit" value="전송">
+</form>
+
+</body>
+</html>

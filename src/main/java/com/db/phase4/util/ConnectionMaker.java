@@ -16,7 +16,6 @@ public class ConnectionMaker {
 
     public Connection createConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(URL, ID, PW);
-        conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
         conn.setAutoCommit(false);
         return conn;
     }

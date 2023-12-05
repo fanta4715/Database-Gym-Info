@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Functions</title>
+  <style>
+    /* Your CSS styles here */
+    .search-button {
+      display: inline-block;
+      padding: 10px 20px; /* Adjust padding as needed */
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h1>MyPage</h1>
+<div class="button-container">
+  <!-- 대여물품 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/rental-item'}" class="search-button">내가 대여한 물품 조회</a>
+
+  <!-- 운동기구 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/machine'}" class="search-button">내가 예약/사용한 운동기구 조회</a>
+
+  <!-- 트레이너 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/trainer'}" class="search-button">내 트레이너 조회</a>
+
+  <!-- 리뷰 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/user-info'}" class="search-button">내 개인정보 조회</a>
+
+  <!-- 건강정보 조회 -->
+  <a th:href="@{'/user/' + ${userId} + '/mypage/health-info'}" class="search-button">내 건강정보 조회</a>
+</div>
+</body>
+</html>

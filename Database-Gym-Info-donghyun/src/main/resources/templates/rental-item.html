@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment Rental</title>
+    <style>
+        /* Your existing CSS styles */
+        /* ... */
+        .rental-list {
+            padding: 20px;
+        }
+
+        .rental-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .rental-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .rental-item span {
+            margin-right: 10px;
+        }
+
+        .quantity-info {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .rental-fee {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .rental-item button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .rental-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .highlighted-item {
+            background-color: #cfe2f3; /* Sky Blue */
+        }
+
+
+        .button-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .button-info span {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="rental-list" th:each="item : ${rentalItems}">
+    <div class="rental-item">
+        <span th:text="${item.itemName}"></span>
+        <div class="button-info">
+            <span class="quantity-info" th:text="${item.maxQuantity}+'개 '"> / </span>
+            <span class="rental-fee" th:text="${item.rentalFee} + ' 원'"></span>
+            <form th:action="@{/rental}" method="post">
+                <input type="hidden" th:name="gymId" th:value="${gymId}">
+                <input type="hidden" th:name="itemName" th:value="${item.itemName}">
+                <button type="submit">Rent</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

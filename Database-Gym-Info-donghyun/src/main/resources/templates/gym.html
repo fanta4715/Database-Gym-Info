@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gym List</title>
+    <!-- CSS 스타일을 추가하세요 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gym-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .gym-list-item {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{'/user/' + ${userId} + '/mypage'}">
+        <button>my page</button>
+    </a>
+    <h1>Gym List</h1>
+    <!-- Thymeleaf 템플릿 수정 -->
+    <ul class="gym-list">
+        <!-- Thymeleaf 반복문을 사용하여 Gym 목록을 표시 -->
+        <li th:each="gym : ${gyms}" class="gym-list-item">
+            <h2 th:text="${gym.name}">Gym Name</h2>
+            <p th:text="${gym.location}">Location</p>
+            <p th:text="${gym.contact}">Contact</p>
+            <p th:text="${gym.capacity}">Capacity</p>
+            <!-- 여기에 추가적인 Gym 정보 표시 -->
+            <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gym.gymId}}" class="btn">Select Gym</a>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

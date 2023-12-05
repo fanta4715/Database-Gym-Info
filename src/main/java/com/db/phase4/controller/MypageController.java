@@ -1,9 +1,15 @@
 package com.db.phase4.controller;
 
+
 import com.db.phase4.dao.UserDao;
 import com.db.phase4.dto.MachineViewDto;
+import com.db.phase4.dto.MachineViewDtoTwo;
 import com.db.phase4.dto.gym.UserViewDto;
+
+import com.db.phase4.dto.HealthInfoDto;
+import com.db.phase4.dto.RentalDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
+import com.db.phase4.service.RentalService;
 import com.db.phase4.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
     private final UserService userService;
+    private final RentalService rentalService;
 
     @GetMapping("/user/{userId}/mypage")
     public String mypageView(@PathVariable int userId, Model model) {
@@ -28,12 +37,14 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/rental-item")
     public String myRentalItemView(@PathVariable int userId, Model model) {
+        model.addAttribute("userId", userId);
+        model.addAttribute("rentalItems", rentalService.findRentalItemById(userId));
         return "mypage/mypage-rental";
     }
 
     @GetMapping("/user/{userId}/mypage/machine")
     public String myMachineView(@PathVariable int userId, Model model) {
-        List<MachineViewDto> machineViewDtoList = userService.myMachineInfo(userId);
+        List<MachineViewDtoTwo> machineViewDtoList = userService.myMachineInfo(userId);
         System.out.println(userId);
         model.addAttribute("machineList", machineViewDtoList);
         return "mypage/mypage-machine";
@@ -78,6 +89,7 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/health-info")
     public String myHealthInfoView(@PathVariable int userId, Model model) {
+        model.addAttribute("healthInfos",userService.findHealthInfoById(userId));
         return "mypage/mypage-healthInfo";
     }
 

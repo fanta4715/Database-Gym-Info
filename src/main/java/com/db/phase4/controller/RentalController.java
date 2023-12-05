@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RentalController {
     private final RentalService rentalService;
 
-    //            System.out.print("17. 대여물품 대여\n "
-//            "INSERT INTO RENTS(User_id, Gym_id, Item_name) VALUES('" + user_id + "', '" + gym_id + "', '" + item_name + "')"
-    @GetMapping("/rental-request")
-    public String rentalSearch(@RequestParam String gymId, @RequestParam String itemName, Model model) {
-//        model.addAttribute("rentals", rentalService.(gymId, itemName));
-        return "rental-request";
+    @GetMapping("/user/{userId}/gym/{gymId}/rental-request/{itemName}")
+    public String rentalRequest(@PathVariable int userId, @PathVariable int gymId, @PathVariable String itemName, Model model) {
+        rentalService.requestRental(userId, gymId, itemName);
+        return "redirect:/user/" + userId + "/gym/" + gymId + "/rental-item";
+    }
+
+    @GetMapping("/user/{userId}/gym/{gymId}/rental-return/{itemName}")
+    public String rentalReturn(@PathVariable int userId, @PathVariable int gymId, @PathVariable String itemName, Model model) {
+        rentalService.returnRental(userId, gymId, itemName);
+        return "redirect:/user/" + userId + "/gym/" + gymId + "/rental-item";
     }
 }

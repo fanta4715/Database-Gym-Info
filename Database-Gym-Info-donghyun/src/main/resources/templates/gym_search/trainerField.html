@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Trainer of Gyms Search Results</title>
+</head>
+<body>
+
+<div id="gym-search-container">
+    <h1>Gym Search Results By Trainer's Specialization</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>GYM NAME</th>
+            <th>TRAINER NAME</th>
+            <th>SPECIALIZATION</th>
+            <th>CONTACT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf's each directive to iterate over the trainerList -->
+        <tr th:each="trainer : ${trainerList}">
+            <td th:text="${trainer.gymName}"></td>
+            <td th:text="${trainer.trainerName}"></td>
+            <td th:text="${trainer.specialization}"></td>
+            <td th:text="${trainer.contact}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
