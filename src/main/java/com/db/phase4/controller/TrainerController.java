@@ -28,4 +28,6 @@ public class TrainerController {
         userService.registerTrainer(trainerRegisterDto);
         return "redirect:/user/"+trainerRegisterDto.getUserId()+"/gym/"+trainerRegisterDto.getGymId()+"/trainer";
     }
+
+
 }

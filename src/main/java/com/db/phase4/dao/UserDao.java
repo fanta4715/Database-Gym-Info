@@ -7,6 +7,7 @@ import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import com.db.phase4.util.ConnectionMaker;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,16 +32,40 @@ public class UserDao {
 
         try {
             conn = connectionMaker.createConnection();
-            stmt = conn.createStatement();
+            conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
+            stmt = conn.createStatement();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT TRAINER_ID FROM USERS WHERE USER_ID= ?");
+            pstmt.setInt(1, dto.getUserId());
+            ResultSet rs1 = pstmt.executeQuery();
+            rs1.next();
+
+            int myTrainerId= rs1.getInt(1);
+            log.info("myTrainerId: " + myTrainerId);
+            log.info("dto.getTrainerId(): " + dto.getTrainerId());
             StringBuffer sb = new StringBuffer();
 
-            sb.append("UPDATE USERS");
-            sb.append(" SET TRAINER_ID=" + dto.getTrainerId());
-            sb.append(" WHERE USER_ID=" + dto.getUserId());
+            if (myTrainerId == dto.getTrainerId()) {
+                sb.append("UPDATE USERS");
+                sb.append(" SET TRAINER_ID = NULL");
+                sb.append(" WHERE USER_ID=" + dto.getUserId());
+            }
 
+            else {
+                sb.append("UPDATE USERS");
+                sb.append(" SET TRAINER_ID=" + dto.getTrainerId());
+                sb.append(" WHERE USER_ID=" + dto.getUserId());
+            }
             stmt.executeUpdate(sb.toString());
+            conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
@@ -66,7 +91,8 @@ public class UserDao {
             rs = stmt.executeQuery(sb.toString());
             rs.next();
             trainerId = rs.getInt(1);
-            log.info("trainerId: " + trainerId);
+            log.info("지금 조회하는 유저의 trainerId: " + trainerId);
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
