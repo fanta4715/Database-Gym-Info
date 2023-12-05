@@ -1,7 +1,9 @@
 package com.db.phase4.controller;
 
 import com.db.phase4.dto.HealthInfoDto;
+import com.db.phase4.dto.RentalDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
+import com.db.phase4.service.RentalService;
 import com.db.phase4.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,10 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
     private final UserService userService;
+    private final RentalService rentalService;
 
     @GetMapping("/user/{userId}/mypage")
     public String mypageView(@PathVariable int userId, Model model) {
@@ -22,6 +27,8 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/rental-item")
     public String myRentalItemView(@PathVariable int userId, Model model) {
+        model.addAttribute("userId", userId);
+        model.addAttribute("rentalItems", rentalService.findRentalItemById(userId));
         return "mypage/mypage-rental";
     }
 

@@ -29,4 +29,8 @@ public class RentalService {
     public void returnRental(int userId, int gymId, String itemName) {
         rentalDao.returnRental(userId, gymId, itemName);
     }
+
+    public List<RentalDto> findRentalItemById(int userId) {
+        return rentalDao.findRentalItemById(userId);
+    }
 }
