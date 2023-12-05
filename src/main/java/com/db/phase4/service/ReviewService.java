@@ -41,4 +41,8 @@ public class ReviewService {
     public List<ReviewCountDto> findByGenderAndAge(String gender, LocalDate lowerBirthday, LocalDate upperBirthday) {
         return reviewDao.findByGenderAndAge(gender, lowerBirthday, upperBirthday);
     }
+
+    public int findUserIdById(int reviewId) {
+        return reviewDao.findUserIdById(reviewId);
+    }
 }

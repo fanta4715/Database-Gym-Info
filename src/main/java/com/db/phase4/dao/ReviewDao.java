@@ -235,5 +235,31 @@ public class ReviewDao {
         }
     }
 
-//    public
+    public int findUserIdById(int reviewId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        int reviewerId = 0;
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT r.user_id ");
+            sb.append("FROM review r ");
+            sb.append("WHERE r.review_id ="+reviewId);
+
+            rs = stmt.executeQuery(sb.toString());
+            rs.next();
+            reviewerId = rs.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return reviewerId;
+        }
+    }
+
+
 }

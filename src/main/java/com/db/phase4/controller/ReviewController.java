@@ -42,6 +42,10 @@ public class ReviewController {
 
     @PostMapping("/review-delete")
     public String deleteReview(@ModelAttribute ReviewDeleteReq reviewDeleteReq) {
+        int reviewerId = reviewService.findUserIdById(reviewDeleteReq.getReviewId());
+        if (reviewerId != reviewDeleteReq.getUserId()) {
+            return "redirect:/user/"+reviewDeleteReq.getUserId()+"/gym/"+reviewDeleteReq.getGymId()+"/review";
+        }
         reviewService.delete(reviewDeleteReq.getReviewId());
         return "redirect:/user/"+reviewDeleteReq.getUserId()+
                 "/gym/"+reviewDeleteReq.getGymId()+"/review";
@@ -49,6 +53,10 @@ public class ReviewController {
 
     @GetMapping("/user/{userId}/gym/{gymId}/review/{reviewId}/review-update")
     public String updateView(@PathVariable int userId, @PathVariable int gymId, @PathVariable int reviewId, Model model) {
+        int reviewerId = reviewService.findUserIdById(reviewId);
+        if (reviewerId != userId) {
+            return "redirect:/user/"+userId+"/gym/"+gymId+"/review";
+        }
         model.addAttribute("reviewId", reviewId);
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
