@@ -1,12 +1,5 @@
-# Database-Gym-Info
 
-
-
-
-
-## 제출물에 대한 실행 및 사용 방법, 기능 설명, 유의 사항, Application 제작 환경 등
-
-**개발 환경**
+# 개발 환경
 - Java version : 17
 - IDE : Intellij
 - 프레임워크 : Spring Boot 3.2.0 (with Gradle)
@@ -14,19 +7,18 @@
 
   
 
-**Oracle DB 계정정보**
+# Oracle DB 계정정보
 - Hostname : localhost
 - Port : 1521
 - SID : orcl
 - Username : GYM
 - Password : COMP322
 
-
-### 시작화면 
-1. src/main/java/com.db.phase4/Phase4Application을 실행
-2. http://localhost:8080/login에 접속하여 Id를 입력해서 USER 로그인합니다.(User id는 1~1000사이 정수입니다.)
-3. 
-해당 유저를 바탕으로 Gym-info 서비스를 이용할 수 있습니다. 
+# 실행 및 사용방법
+1. Phase2의 DDL, DML로 위의 기술한 DB계정에 데이터 INSERT
+2. 프로젝트를 Intellij에서 열고, src/main/java/com.db.phase4/Phase4Application 실행
+3.  http://localhost:8080/login에 접속하여 Id를 입력해서 USER 로그인(User id는 1~1000사이 정수입니다.)
+4. 해당 유저를 바탕으로 Gym-info 서비스를 이용할 수 있습니다. 
 
 
 ### 데모동영상 YouTube Link 
@@ -34,7 +26,7 @@
 YouTube Link : ()
 
 
-### 기능 설명
+# 기능 설명
 - 마이페이지 
   - 내 대여물품 조회
   - 내 현재 예약/사용 기구 조회
@@ -53,7 +45,6 @@ YouTube Link : ()
   - ID에 해당하는 User조회
 
 
-## 제작한 Application에 대해 사용자가 알아야 할 내용을 복합적으로 기술. 
 
 
 
@@ -69,7 +60,7 @@ YouTube Link : ()
 
 
 
-## Phase3 to Phase4
+# Phase3 to Phase4 적용사항 
 
 Phase3 To Phase4
 Phase3에서 작성한 기능들을 Phase4에서 어떻게 구현하였는지 기술.
