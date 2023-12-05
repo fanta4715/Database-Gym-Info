@@ -62,7 +62,7 @@
                     </form>
 
                     <!-- 이용 불가 -->
-                    <form th:if="${(machineViewDto.isUsing() == true and machineViewDto.isReserved() == true and machineViewDto.isDoing() == false and machineViewDto.isReserving() == false) or (canUse == false and canReserve == false and not (machineViewDto.isDoing() == true or machineViewDto.isReserving() == true))}">
+                    <form th:unless="${(machineViewDto.isDoing() == false  and machineViewDto.isReserved() == false and machineViewDto.isReserving() == false and canReserve == true)or(machineViewDto.isUsing() == false and machineViewDto.isDoing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == true and canUse == true and canReserve == false)or(machineViewDto.isDoing() == false and machineViewDto.isReserved() == true and machineViewDto.isReserving() == true and canReserve == false)or(canUse == true and machineViewDto.isUsing() == false and machineViewDto.isDoing() == false and machineViewDto.isReserving() == false and canUse == true)or(canUse == false and machineViewDto.isUsing() == true and machineViewDto.isDoing() == true and machineViewDto.isReserving() == false)}">
                         <input type="submit" value="Unavailable" style="background-color: red" disabled="disabled"/>
                     </form>
                 </td>
