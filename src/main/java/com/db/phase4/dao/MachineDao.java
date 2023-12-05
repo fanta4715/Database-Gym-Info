@@ -2,7 +2,6 @@ package com.db.phase4.dao;
 
 import com.db.phase4.dto.MachineDto;
 import com.db.phase4.dto.MachineViewDto;
-import com.db.phase4.dto.MachineViewDtoTwo;
 import com.db.phase4.util.ConnectionMaker;
 
 import java.sql.*;
@@ -272,82 +271,5 @@ public class MachineDao {
             connectionMaker.closeAllWthPstmt(conn, pstmt, rs);
         }
         return false;
-    }
-
-    public List<MachineViewDtoTwo> myMachineInfo(int userId) {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<MachineViewDtoTwo> machineList = new ArrayList<>();
-        try {
-            conn = connectionMaker.createConnection();
-            stmt = conn.createStatement();
-
-//            int machineId;
-//            String name;
-//            String type;
-//            String targetMuscle;
-//            String state;
-
-            //-----------------현재 유저의 예약/사용 머신 아이디 가져오기------------------//
-            StringBuffer sb = new StringBuffer();
-            sb.append("SELECT using_machine_id, reserve_machine_id ");
-            sb.append("FROM USERS ");
-            sb.append("WHERE User_id = " + userId + " ");
-            rs = stmt.executeQuery(sb.toString());
-            System.out.print("sb: ");
-            System.out.println(sb.toString());
-
-            int using_machine_id =-1; int reserve_machine_id=-1;
-
-            while (rs.next()) {
-                using_machine_id = rs.getInt(1);
-                System.out.print("using machine id: ");
-                System.out.println(using_machine_id);
-                reserve_machine_id = rs.getInt(2);
-                System.out.print("reserve machine id: ");
-                System.out.println(reserve_machine_id);
-            }
-
-            //----------------현재 유저의 사용중인 머신 정보 가져와서 배열에 저장------------//
-            if(using_machine_id != 0){
-                sb = new StringBuffer();
-                sb.append("SELECT * FROM MACHINE ");
-                sb.append("WHERE MACHINE_ID = " + using_machine_id);
-                rs = stmt.executeQuery(sb.toString());
-                while (rs.next()) {
-                    int machine_id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    String type = rs.getString(3);
-                    String targetMuscle = rs.getString(4);
-                    String state = rs.getString(5);
-                    MachineViewDtoTwo machineViewDto = new MachineViewDtoTwo(1, machine_id, name, type, targetMuscle, state);
-                    machineList.add(machineViewDto);
-                }
-            }
-
-            //----------------현재 유저의 예약중인 머신 정보 가져와서 배열에 저장------------//
-            if(reserve_machine_id != 0){
-                sb = new StringBuffer();
-                sb.append("SELECT * FROM MACHINE ");
-                sb.append("WHERE MACHINE_ID = " + reserve_machine_id);
-                rs = stmt.executeQuery(sb.toString());
-                while (rs.next()) {
-                    int machine_id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    String type = rs.getString(3);
-                    String targetMuscle = rs.getString(4);
-                    String state = rs.getString(5);
-                    MachineViewDtoTwo machineViewDto = new MachineViewDtoTwo(2, machine_id, name, type, targetMuscle, state);
-                    machineList.add(machineViewDto);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionMaker.closeAll(conn, stmt, rs);
-            return machineList;
-        }
     }
 }
