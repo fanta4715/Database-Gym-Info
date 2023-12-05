@@ -1,117 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Trainer Search</title>
-  <style>
-    .trainer-list {
-      padding: 20px;
-    }
-
-    .trainer-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      margin-bottom: 8px;
-      border: 1px solid #ccc;
-      background-color: #fff;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .trainer-item:hover {
-      background-color: #f0f0f0;
-    }
-
-    .trainer-item span {
-      margin-right: 10px;
-    }
-
-    .trainer-item button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .trainer-item button:hover {
-      background-color: #0056b3;
-    }
-    .search-container {
-      padding: 20px;
-    }
-
-    .search-container input[type="text"] {
-      padding: 8px;
-      margin-right: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    .search-container button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .search-container button:hover {
-      background-color: #0056b3;
-    }
-
-    .registered-trainer {
-      background-color: #28a745 !important; /* 또는 원하는 색상 */
-    }
-  </style>
+  <meta charset="UTF-8"/>
+  <title>Machine Search</title>
+  <link rel="stylesheet" th:href="@{/jh.css}"/>
 </head>
-<body>
 
-<div class="search-container">
+<body>
+<div class="container">
+  <h1>Gym Id : <span th:text="${gymId}"></span></h1>
   <a href="/trainer-search">
     <button>trainer search</button>
   </a>
-</div>
 
-<div class="trainer-list">
-  <!-- 트레이너 리스트 동적 생성 -->
-  <div class="trainer-item" th:each="trainer : ${trainers}">
-    <span th:text="${trainer.name}">Trainer Name</span>
-    <span th:text="${trainer.specialization}">Specialization</span>
-    <span th:text="${trainer.workYear} + ' Years'">Experience</span>
-    <form th:action="@{/register-trainer}" method="post">
-      <input type="hidden" id="userId" name="userId" th:value="${userId}">
-      <input type="hidden" id="gymId" name="gymId" th:value="${gymId}">
-      <input type="hidden" id="trainerId" name="trainerId" th:value="${trainer.trainerId}">
-      <button type="submit"
-              th:classappend="${ptTrainerId == trainer.trainerId} ? 'registered-trainer' : ''"
-              th:text="${ptTrainerId == trainer.trainerId} ? 'Registered' : 'Apply for PT'">PT Apply</button>
-    </form>
+  <div class="rental-list">
+    <table>
+      <thead>
+        <tr>
+            <th>Trainer Name</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>PT apply Button</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="trainer : ${trainers}">
+            <td th:text="${trainer.name}"></td>
+            <td th:text="${trainer.specialization}"></td>
+            <td th:text="${trainer.workYear} + ' Years'"></td>
+            <td>
+                <form th:action="@{/register-trainer}" method="post">
+                    <input type="hidden" id="userId" name="userId" th:value="${userId}">
+                    <input type="hidden" id="gymId" name="gymId" th:value="${gymId}">
+                    <input type="hidden" id="trainerId" name="trainerId" th:value="${trainer.trainerId}">
+<!--                    <button type="submit"-->
+<!--                            th:classappend="${ptTrainerId == trainer.trainerId} ? 'registered-trainer' : ''"-->
+<!--                            th:text="${ptTrainerId == trainer.trainerId} ? 'Registered' : 'Apply for PT'">PT Apply</button>-->
+                  <input type="submit"
+                         th:style="${ptTrainerId == trainer.trainerId} ? 'background-color: #4CAF50; color: white;' : 'background-color: #008CBA; color: white;'"
+                         th:classappend="${ptTrainerId == trainer.trainerId} ? 'registered-trainer' : ''"
+                         th:value="${ptTrainerId == trainer.trainerId} ? 'Apply Cancel' : 'Apply for PT'"/>
+                </form>
+
+            </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-<script>
-    function searchTrainers() {
-      var specialization = document.getElementById('searchInput').value.toLowerCase();
-      var trainers = document.querySelectorAll('.trainer-item');
 
-      trainers.forEach(function(trainer) {
-        var specialize = trainer.getElementsByTagName('span')[1].innerText.toLowerCase();
-        if (specialize.includes(specialization)) {
-          trainer.style.display = 'flex';
-        } else {
-          trainer.style.display = 'none';
-        }
-      });
-    }
 
-    function applyPT(trainerName) {
-      // Here, you can implement the logic for applying for PT with the selected trainer
-      alert('You have applied for PT with ' + trainerName + '.');
-      // Implement additional functionalities as needed
-    }
-  </script>
 </body>
 </html>
