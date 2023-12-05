@@ -2,7 +2,6 @@ package com.db.phase4.controller;
 
 import com.db.phase4.dto.GymViewDto;
 import com.db.phase4.dto.MachineViewDto;
-import com.db.phase4.dto.RentalItemViewDto;
 import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewViewDto;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
