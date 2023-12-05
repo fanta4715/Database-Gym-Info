@@ -39,4 +39,8 @@ public class UserService {
     public List<HealthInfoDto> findHealthInfoById(int userId) {
         return userDao.findHealthInfoById(userId);
     }
+
+    public boolean checkIfUserHasTrainer(int userId) {
+        return userDao.checkIfUserHasTrainer(userId);
+    }
 }

@@ -44,13 +44,15 @@
 <div class="trainer-container">
     <h1>My Trainer</h1>
     <div class="trainer-details">
-        <span class="detail-item"><strong>Name:</strong> <span th:text="${myTrainer.name}">Trainer Name</span></span>
-        <span class="detail-item"><strong>Specialization:</strong> <span th:text="${myTrainer.specialization}">Specialization</span></span>
-        <span class="detail-item"><strong>Experience:</strong> <span th:text="${myTrainer.workYear} + ' Years'">Years</span></span>
-        <span class="detail-item"><strong>Birthdate:</strong> <span th:text="${myTrainer.birthDate}">Birthdate</span></span>
-        <span class="detail-item"><strong>Sex:</strong> <span th:text="${myTrainer.sex}">Sex</span></span>
-        <span class="detail-item"><strong>Contact:</strong> <span th:text="${myTrainer.contact}">Contact</span></span>
+        <span class="detail-item" th:if="${myTrainer.name != null}"><strong>Name:</strong> <span th:text="${myTrainer.name}">Trainer Name</span></span>
+        <span class="detail-item" th:if="${myTrainer.specialization != null}"><strong>Specialization:</strong> <span th:text="${myTrainer.specialization}">Specialization</span></span>
+        <span class="detail-item" th:if="${myTrainer.workYear != 0}"><strong>Experience:</strong> <span th:text="${myTrainer.workYear}">Years</span></span>
+        <span class="detail-item" th:if="${myTrainer.birthDate != null}"><strong>Birthdate:</strong> <span th:text="${myTrainer.birthDate}">Birthdate</span></span>
+        <span class="detail-item" th:if="${myTrainer.sex != null}"><strong>Sex:</strong> <span th:text="${myTrainer.sex}">Sex</span></span>
+        <span class="detail-item" th:if="${myTrainer.contact != null}"><strong>Contact:</strong> <span th:text="${myTrainer.contact}">Contact</span></span>
+        <span class="detail-item" th:if="${myTrainer.name == null}">You don't have a trainer yet.</span>
     </div>
+
 </div>
 </body>
 </html>

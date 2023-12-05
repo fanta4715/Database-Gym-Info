@@ -39,6 +39,10 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/trainer")
     public String myTrainerView(@PathVariable int userId, Model model) {
+        if (!userService.checkIfUserHasTrainer(userId)) {
+            model.addAttribute("myTrainer", new FilteredTrainerViewDto());
+            return "mypage/mypage-trainer";
+        }
         FilteredTrainerViewDto myTrainer = userService.findTrainerById(userId);
         model.addAttribute("myTrainer", myTrainer);
         return "mypage/mypage-trainer";

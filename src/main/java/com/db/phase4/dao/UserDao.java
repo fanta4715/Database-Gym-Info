@@ -115,6 +115,7 @@ public class UserDao {
             sb.append("SELECT t.name, t.trainer_id, t.specialization, t.work_year, t.birth_date, t.sex, t.contact ");
             sb.append("FROM TRAINER t, USERS u ");
             sb.append("WHERE u.trainer_id = t.trainer_id ");
+            sb.append("AND u.user_id = " + userId);
 
             rs = stmt.executeQuery(sb.toString());
             rs.next();
@@ -262,6 +263,38 @@ public class UserDao {
         } finally {
             connectionMaker.closeAll(conn, stmt, rs);
             return healthInfos;
+        }
+
+    }
+
+    public boolean checkIfUserHasTrainer(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        Boolean hasTrainer = false;
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT trainer_id ");
+            sb.append("FROM USERS ");
+            sb.append("WHERE user_id = " + userId);
+
+            rs = stmt.executeQuery(sb.toString());
+            rs.next();
+            int trainerId = rs.getInt(1);
+            if (trainerId != 0) {
+                log.info("트레이너가 있습니다.");
+                hasTrainer = true;
+            }
+            log.info("트레이너가 없습니다.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return hasTrainer;
         }
 
     }
