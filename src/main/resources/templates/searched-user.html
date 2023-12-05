@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Searched User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .trainer-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .trainer-details {
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .detail-item strong {
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<div class="trainer-container">
+    <h1>Searched User</h1>
+    <div class="trainer-details">
+        <span class="detail-item"><strong>Name:</strong> <span th:text="${user.name}"></span></span>
+        <span class="detail-item"><strong>Birthdate:</strong> <span th:text="${user.birthdate}"></span></span>
+        <span class="detail-item"><strong>Sex:</strong> <span th:text="${user.sex}"></span></span>
+    </div>
+</div>
+</body>
+</html>

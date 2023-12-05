@@ -122,4 +122,10 @@ public class ViewController {
         model.addAttribute("people", people);
         return "people";
     }
+
+    @GetMapping("/searched-user")
+    public String searchedUserView(@RequestParam int userId, Model model) {
+        model.addAttribute("user", userService.findById(userId));
+        return "searched-user";
+    }
 }
