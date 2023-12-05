@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @PostMapping("/login")
-    public String login(@RequestParam("userID") int userID,
-                        @RequestParam("userName") String userName) {
+    public String login(@RequestParam("userID") int userID) {
         return "redirect:/user/" + userID + "/gym";
     }
 
