@@ -1,5 +1,6 @@
 package com.db.phase4.controller;
 
+import com.db.phase4.dto.HealthInfoDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class MypageController {
 
     @GetMapping("/user/{userId}/mypage/health-info")
     public String myHealthInfoView(@PathVariable int userId, Model model) {
+        model.addAttribute("healthInfos",userService.findHealthInfoById(userId));
         return "mypage/mypage-healthInfo";
     }
 

@@ -1,5 +1,6 @@
 package com.db.phase4.dao;
 
+import com.db.phase4.dto.HealthInfoDto;
 import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
@@ -159,5 +160,83 @@ public class UserDao {
             connectionMaker.closeAll(conn, stmt, rs);
             return people;
         }
+    }
+
+    public UserViewDto findById(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        UserViewDto person = null;
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT U.Name, U.Birth_date, U.SEX FROM USERS U WHERE U.User_id = " + userId);
+            String sql = sb.toString();
+
+            rs = stmt.executeQuery(sb.toString());
+            rs.next();
+            String name = rs.getString(1);
+            LocalDate birthDate = rs.getDate(2).toLocalDate();
+            String sex = rs.getString(3);
+            person = UserViewDto.builder()
+                        .name(name)
+                        .birthdate(birthDate)
+                        .sex(sex)
+                        .build();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return person;
+        }
+
+
+    }
+
+    public List<HealthInfoDto> findHealthInfoById(int userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<HealthInfoDto> healthInfos = new ArrayList<>();
+
+        try {
+            conn = connectionMaker.createConnection();
+            stmt = conn.createStatement();
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("SELECT measure_date, weight, height, body_fat_percentage, muscle_mass ");
+            sb.append("FROM HEALTH_INFO ");
+            sb.append("WHERE user_id = " + userId);
+            String sql = sb.toString();
+
+            rs = stmt.executeQuery(sb.toString());
+            while(rs.next()){
+                LocalDate measureDate = rs.getDate(1).toLocalDate();
+                float weight = rs.getFloat(2);
+                float height = rs.getFloat(3);
+                float bodyFatPercentage = rs.getFloat(4);
+                float muscleMass = rs.getFloat(5);
+
+                healthInfos.add(HealthInfoDto.builder()
+                        .measureDate(measureDate)
+                        .weight(weight)
+                        .height(height)
+                        .bodyFatPercentage(bodyFatPercentage)
+                        .muscleMass(muscleMass)
+                        .build());
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionMaker.closeAll(conn, stmt, rs);
+            return healthInfos;
+        }
+
     }
 }
