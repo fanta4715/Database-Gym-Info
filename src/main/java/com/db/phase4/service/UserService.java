@@ -1,9 +1,11 @@
 package com.db.phase4.service;
 
 import com.db.phase4.dao.UserDao;
+import com.db.phase4.dao.MachineDao;
+import com.db.phase4.dto.MachineViewDtoTwo;
+import com.db.phase4.dto.gym.UserViewDto;
+
 import com.db.phase4.dto.HealthInfoDto;
-import com.db.phase4.dto.RentalViewDto;
-import com.db.phase4.dto.UserViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
 import com.db.phase4.dto.trainer.TrainerRegisterDto;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDao userDao;
+    private final MachineDao machineDao;
 
     public void registerTrainer(TrainerRegisterDto trainerRegisterDto) {
         userDao.registerTrainer(trainerRegisterDto);
@@ -31,8 +34,14 @@ public class UserService {
         return userDao.findByGymId(gymId);
     }
 
+    public UserViewDto findByUserId(int userId){ return userDao.findByUserId(userId);}
 
-    public UserViewDto findById(int userId) {
+    public UserViewDto modifyUserInfo(String[] userInfoArray){return userDao.modifyUserInfo(userInfoArray);}
+
+    public List<MachineViewDtoTwo> myMachineInfo(int userId) {
+        return machineDao.myMachineInfo(userId);
+    }
+    public com.db.phase4.dto.UserViewDto findById(int userId) {
         return userDao.findById(userId);
     }
 

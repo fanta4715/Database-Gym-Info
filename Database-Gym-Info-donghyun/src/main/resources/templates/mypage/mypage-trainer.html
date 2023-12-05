@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .trainer-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .trainer-details {
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .detail-item strong {
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<div class="trainer-container">
+    <h1>My Trainer</h1>
+    <div class="trainer-details">
+        <span class="detail-item"><strong>Name:</strong> <span th:text="${myTrainer.name}">Trainer Name</span></span>
+        <span class="detail-item"><strong>Specialization:</strong> <span th:text="${myTrainer.specialization}">Specialization</span></span>
+        <span class="detail-item"><strong>Experience:</strong> <span th:text="${myTrainer.workYear} + ' Years'">Years</span></span>
+        <span class="detail-item"><strong>Birthdate:</strong> <span th:text="${myTrainer.birthDate}">Birthdate</span></span>
+        <span class="detail-item"><strong>Sex:</strong> <span th:text="${myTrainer.sex}">Sex</span></span>
+        <span class="detail-item"><strong>Contact:</strong> <span th:text="${myTrainer.contact}">Contact</span></span>
+    </div>
+</div>
+</body>
+</html>

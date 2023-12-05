@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trainer search</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #3498db;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        span {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/searched-trainer" method="get">
+    <h1>전문분야와 경력으로 Trainer 조회 (모든 GYM)</h1>
+    <label>
+        <span>전문 분야</span>
+        <input type="text" name="specialization">
+    </label>
+
+    <label>
+        <span>최소 경력</span>
+        <input type="text" name="lowerYear">
+    </label>
+
+    <label>
+        <span>최대 경력</span>
+        <input type="text" name="upperYear">
+    </label>
+
+    <input type="submit" value="전송">
+</form>
+
+</body>
+</html>

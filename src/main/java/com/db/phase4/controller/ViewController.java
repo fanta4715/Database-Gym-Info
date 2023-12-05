@@ -2,7 +2,10 @@ package com.db.phase4.controller;
 
 import com.db.phase4.dto.GymViewDto;
 import com.db.phase4.dto.MachineViewDto;
-import com.db.phase4.dto.UserViewDto;
+
+import com.db.phase4.dto.gym.UserViewDto;
+
+
 import com.db.phase4.dto.review.ReviewCountDto;
 import com.db.phase4.dto.review.ReviewViewDto;
 import com.db.phase4.dto.trainer.FilteredTrainerViewDto;
