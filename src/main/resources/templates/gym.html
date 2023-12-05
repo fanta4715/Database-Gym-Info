@@ -42,10 +42,10 @@
     <ul class="gym-list">
         <!-- Thymeleaf 반복문을 사용하여 Gym 목록을 표시 -->
         <li th:each="gym : ${gyms}" class="gym-list-item">
-            <h2 th:text="${gym.name}">Gym Name</h2>
-            <p th:text="${gym.location}">Location</p>
-            <p th:text="${gym.contact}">Contact</p>
-            <p th:text="${gym.capacity}">Capacity</p>
+            <h2 th:text="${'GYM NAME : '+gym.name}">Gym Name</h2>
+            <p th:text="${'Location : '+gym.location}">Location</p>
+            <p th:text="${'Contact : '+gym.contact}">Contact</p>
+            <p th:text="${'Capacity : '+gym.capacity}">Capacity</p>
             <!-- 여기에 추가적인 Gym 정보 표시 -->
             <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gym.gymId}}" class="btn">Select Gym</a>
         </li>
