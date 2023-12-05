@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -12,32 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MachineController {
     private final MachineService machineService;
 
-
-//            System.out.print("15. 운동기구 예약\n ");
-//            sb.append("UPDATE USERS");
-//		sb.append(" SET RESERVE_MACHINE_ID=" + machineId);
-//		sb.append(" WHERE USER_ID=" + userId);
-
-    //        sb.append("UPDATE MACHINE");
-//		sb.append(" SET STATE='non_reservable'");
-//		sb.append(" WHERE MACHINE_ID=" + machineId);
-    @GetMapping("/machine-reserve")
-    public String machineReserve(@RequestParam String gymId, @RequestParam String machineId, @RequestParam String userId) {
-        machineService.reserveMachine(gymId, machineId, userId);
-        return "redirect:/machine-search?gymId=" + gymId + "&userId=" + userId;
-    }
-
-//         System.out.print("16. 운동기구 사용\n ");
-//         sb.append("UPDATE USERS");
-//		sb.append(" SET USING_MACHINE_ID=" + machineId);
-//		sb.append(" WHERE USER_ID=" + userId);
-
-    //        sb.append("UPDATE MACHINE");
-//		sb.append(" SET STATE='" + newState + "'");
-//		sb.append(" WHERE MACHINE_ID=" + machineId);
-    @GetMapping("/machine-request")
-    public String machineRequest(@RequestParam String gymId, @RequestParam String machineId, @RequestParam String userId) {
-        machineService.requestMachine(gymId, machineId, userId);
-        return "redirect:/machine-search?gymId=" + gymId + "&userId=" + userId;
+    @GetMapping("/user/{userId}/gym/{gymId}/machine/{machineId}/{reservation}")
+    public String machineReservation(@PathVariable int gymId, @PathVariable int machineId, @PathVariable int userId, @PathVariable String reservation) {
+        System.out.println("machineReservation : " + reservation);
+        machineService.reserveMachine(gymId, machineId, userId, reservation);
+        return "redirect:/user/" + userId + "/gym/" + gymId + "/machine";
     }
 }

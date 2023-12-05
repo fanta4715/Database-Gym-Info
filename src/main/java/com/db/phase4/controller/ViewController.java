@@ -18,13 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 public class ViewController {
     private final GymService gymService;
-    private final RentalItemService rentalItemService;
     private final MachineService machineService;
     private final TrainerService trainerService;
     private final ReviewService reviewService;
@@ -51,18 +49,20 @@ public class ViewController {
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/rental-item")
-    public String rentalItemView(@PathVariable int userId, @PathVariable String gymId, Model model) {
+    public String rentalItemView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
-        model.addAttribute("rentals", rentalService.rentalSearchById(gymId));
+        model.addAttribute("rentals", rentalService.rentalSearchById(gymId, userId));
         return "rental-search";
     }
 
     @GetMapping("/user/{userId}/gym/{gymId}/machine")
-    public String machineView(@PathVariable int userId, @PathVariable String gymId, Model model) {
+    public String machineView(@PathVariable int userId, @PathVariable int gymId, Model model) {
         model.addAttribute("userId", userId);
         model.addAttribute("gymId", gymId);
-        model.addAttribute("machines", machineService.machineSearchById(gymId));
+        model.addAttribute("machines", machineService.machineSearchById(gymId, userId));
+        model.addAttribute("canUse", machineService.canUse(gymId, userId));
+        model.addAttribute("canReserve", machineService.canReserve(gymId, userId));
         return "machine-search";
     }
 
