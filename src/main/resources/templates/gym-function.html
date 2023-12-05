@@ -26,6 +26,7 @@
 </head>
 <body>
 <div class="button-container">
+  <h1>Function List (Gym Id : <span th:text="${gymId}"></span>)</h1>
   <!-- 대여물품 조회 -->
   <a th:href="@{'/user/' + ${userId} + '/gym/' + ${gymId} + '/rental-item'}" class="search-button">대여물품 조회</a>
 
