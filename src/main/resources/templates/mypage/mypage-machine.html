@@ -14,11 +14,19 @@
     <table>
         <thead>
         <tr>
+            <th>상태</th>
+            <th>ID</th>
+            <th>이름</th>
+            <th>타입</th>
+            <th>운동 부위</th>
+            <th>현재 기구 상태</th>
         </tr>
         </thead>
         <tbody>
         <!-- Thymeleaf's each directive to iterate over the trainerList -->
         <tr th:each="machine : ${machineList}">
+            <!-- Use Thymeleaf's conditional expression to set text based on machine.classify -->
+            <td th:text="${machine.classify == 1 ? '사용중인 기구' : (machine.classify == 2 ? '예약중인 기구' : '다른 상태')}"></td>
             <td th:text="${machine.machineId}"></td>
             <td th:text="${machine.name}"></td>
             <td th:text="${machine.type}"></td>

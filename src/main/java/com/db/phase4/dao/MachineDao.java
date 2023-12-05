@@ -157,20 +157,23 @@ public class MachineDao {
 //            String targetMuscle;
 //            String state;
 
-            //-----------------현재 유저의 예약/사용 머신 정보 가져오기------------------//
+            //-----------------현재 유저의 예약/사용 머신 아이디 가져오기------------------//
             StringBuffer sb = new StringBuffer();
             sb.append("SELECT using_machine_id, reserve_machine_id ");
-            sb.append("FROM users ");
-            sb.append("WHERE user_id = " + userId);
-            System.out.println(sb.toString());
+            sb.append("FROM USERS ");
+            sb.append("WHERE User_id = " + userId + " ");
             rs = stmt.executeQuery(sb.toString());
+            System.out.print("sb: ");
+            System.out.println(sb.toString());
 
             int using_machine_id =-1; int reserve_machine_id=-1;
 
             while (rs.next()) {
                 using_machine_id = rs.getInt(1);
+                System.out.print("using machine id: ");
                 System.out.println(using_machine_id);
                 reserve_machine_id = rs.getInt(2);
+                System.out.print("reserve machine id: ");
                 System.out.println(reserve_machine_id);
             }
 
@@ -186,7 +189,7 @@ public class MachineDao {
                     String type = rs.getString(3);
                     String targetMuscle = rs.getString(4);
                     String state = rs.getString(5);
-                    MachineViewDto machineViewDto = new MachineViewDto(machine_id, name, type, targetMuscle, state);
+                    MachineViewDto machineViewDto = new MachineViewDto(1, machine_id, name, type, targetMuscle, state);
                     machineList.add(machineViewDto);
                 }
             }
@@ -203,7 +206,7 @@ public class MachineDao {
                     String type = rs.getString(3);
                     String targetMuscle = rs.getString(4);
                     String state = rs.getString(5);
-                    MachineViewDto machineViewDto = new MachineViewDto(machine_id, name, type, targetMuscle, state);
+                    MachineViewDto machineViewDto = new MachineViewDto(2, machine_id, name, type, targetMuscle, state);
                     machineList.add(machineViewDto);
                 }
             }

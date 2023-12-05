@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class MachineViewDto {
+    int classify;//1: 내가 사용중, 2: 내가 예약중
     int machineId;
     String name;
     String type;
